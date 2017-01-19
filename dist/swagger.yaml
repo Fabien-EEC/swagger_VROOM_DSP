@@ -126,7 +126,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "401":
-          description: Echec de l'authentification.
+          description: Vous n'êtes pas authentifié.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -227,7 +227,7 @@ paths:
           schema:
             $ref: "#/definitions/Returner"
         "401":
-          description: Echec de l'authentification.
+          description: Vous n'êtes pas authentifié.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -339,7 +339,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "401":
-          description: Echec de l'authentification.
+          description: Vous n'êtes pas authentifié.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -373,7 +373,7 @@ paths:
               resultats: 0
 
     post:
-      summary: Pièce à créer
+      summary: Créé une pièce
       description: |
         Soumet la création d'une nouvelle pièce pour ce dossier.
       tags:
@@ -435,7 +435,7 @@ paths:
               response: OK
               message: |
                 La pièce a été créé avec succès.
-              nb_resultats: 0
+              nb_resultats: 1
               execute_time: 0.00087
               resultats:
                 nom: Capot
@@ -463,14 +463,14 @@ paths:
               resultats: null
 
         "401":
-          description: Echec de l'authentification.
+          description: Vous n'êtes pas authentifié.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Echec de l'authentification
+                Vous n'êtes pas authentifié
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -520,7 +520,7 @@ paths:
       description: |
         Met à jour une pièce depuis son id et son dossier id
       tags:
-        - pieces
+        - Pieces
       parameters:
         - description: |
             Identifiant du dossier
@@ -585,10 +585,194 @@ paths:
               response: OK
               message: |
                 Succès de la mise à jour de la pièce.
+              nb_resultats: 1
+              execute_time: 0.00077
+              resultats:
+                nom: Capot
+                aluminium: false
+                peinture: true
+                hors_sinistre: false
+                type_reparation: Echange
+                impact:
+                  - taille: petit
+                    nombre: 3
+                  - taille: moyen
+                    nombre: 15
+        "400":
+          description: |
+            Les informations fournies ne sont pas bonne
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Les données transmises sont invalides.
               nb_resultats: 0
-              execute_time: 0.00187
+              execute_time: 0.00087
               resultats: null
 
+        "401":
+          description: Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: Aucun pièce trouvée.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+    delete:
+      summary: Supprime une pièce
+      description: |
+        Supprime la pièce depuis son id et son dossier id
+      tags:
+        - Pieces
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: dossier_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - description: |
+            Identifiant d'une pièce
+          name: piece_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "204":
+          description: |
+            La pièce a été supprimé avec succès.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                type: array
+                description: Résultat de la requete, peut être un tableau vide.
+                items:
+                  type: string
+          examples:
+            application/json:
+              response: OK
+              message: |
+                La pièce a été supprimé avec succès.
+              nb_resultats: 0
+              execute_time: 0.00077
+              resultats: null
+        "400":
+          description: |
+            Les informations fournies ne sont pas bonne
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Les données transmises sont invalides.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Vous n'avez pas de droit de supprimer cette pièce.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de supprimer cette pièce.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun pièce trouvée.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
 
 # Liste des paramètres fréquents
 parameters:
