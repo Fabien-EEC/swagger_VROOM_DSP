@@ -1,0 +1,789 @@
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "1.0.0"
+  title: VROOM DSP
+  description: |
+    Api sur la consultation et la mise à jour de dossier concernant la grêle.
+produces:
+  - "application/json"
+paths:
+
+  /experts/{id}/dossiers/{jour}:
+    get:
+      summary: Liste des dossiers du jour
+      description: |
+        Retourne la liste des dossiers de VROOM du jour selon l'identifiant de l'expert et le jour choisi,
+        le tout triés par status et par date d'expertise.
+      tags:
+        - Dossier
+      parameters:
+        - name: id
+          in: path
+          description: |
+            Identifiant de l'expert choisi
+          required: true
+          type: integer
+          format: int64
+        - name: jour
+          in: path
+          description: |
+            Date des dossiers à récupérer
+          required: true
+          type: string
+          format: date
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+        - name: start
+          in: query
+          description: |
+            Correspond au numéro de la page
+          required: false
+          type: integer
+          format: int32
+          minimum: 0
+        - name: limit
+          in: query
+          description: |
+            Nombre de dossiers à retourner pour chaque page
+          required: false
+          type: integer
+          format: int32
+
+      responses:
+        "200":
+          description: Dossiers du jour
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+              - current_page
+              - limit
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                $ref: '#/definitions/ListeDesDossiers'
+              current_page:
+                type: integer
+                format: int32
+                description: |
+                  Numéro de la page actuelle commence à 0
+                minimum: 0
+              limit:
+                type: string
+                description:  |
+                  le nombre avant la virgule correspond au nombre de dossiers précédents les dossiers retournés, le nombre après la virgule correspond au nombre de dossiers par page.
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 2
+              execute_time: 0.00087
+              resultats:
+                - dossier_id: 1
+                  nom_prenom: Dupont Luc
+                  vehicule:
+                    immatriculation: DJ-925-AL
+                  statut: 2
+                - dossier_id: 2
+                  nom_prenom: Marc Trollou
+                  vehicule:
+                    immatriculation: AP-832-DD
+                  statut: 1
+              current_page: 0
+              limit: 15
+
+        "400":
+          description: Identifiant(s) fourni(s) invalide(s)
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Les identifiants fournis ne sont pas valides."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "401":
+          description: Echec de l'authentification.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous devez vous connecter pour naviguer sur l'application."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "403":
+          description: Dossiers interdits pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous n'avez pas le droit d'accéder à ces dossiers."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "404":
+            description: Aucun dossier trouvé.
+            schema:
+              $ref: '#/definitions/Returner'
+            examples:
+              application/json:
+                response: FAIL
+                message: "Aucun dossier trouvé pour ce jour."
+                nb_resultats: 0
+                execute_time: 0.00087
+                resultats: 0
+
+  /dossiers/{id}:
+    get:
+      summary: Informations d'un dossier
+      description: |
+        Retourne le dossier depuis son identifiant
+      tags:
+        - Dossier
+      parameters:
+        - name: id
+          in: path
+          description: Identifiant unique du dossier
+          required: true
+          type: integer
+          format: int64
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: Dossier récupéré depuis sont identifiant
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels
+              resultats:
+                $ref: "#/definitions/Dossier"
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 1
+              execute_time: 0.00087
+              resultats:
+                dossier_id: 1
+                nom_prenom: Dupont Luc
+                vehicule:
+                  immatriculation: DJ-925-AL
+                  marque: Peugeot
+                  modele: 206
+                  nombre_pieces: 2
+                nombre_photos: 1
+                statut: 2
+        "400":
+          description: Identifiant du dossier invalide.
+          schema:
+            $ref: "#/definitions/Returner"
+        "401":
+          description: Echec de l'authentification.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous devez vous connecter pour naviguer sur l'application."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "403":
+          description: Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous n'avez pas le droit d'accéder à ce dossier."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "404":
+          description: Aucun dossier trouvé.
+          schema:
+            $ref: "#/definitions/Returner"
+
+  /dossiers/{id}/pieces:
+    get:
+      summary: Liste des pièces endommagées du dossier
+      description: |
+        Retourne les pièces endommagées du dossier depuis l'identifiant de celui-ci.
+      tags:
+        - Pieces
+      parameters:
+        - name: id
+          in: path
+          description: Identifiant du dossier
+          required: true
+          type: integer
+          format: int32
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: Liste des pièces endommagées du dossier.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels
+              resultats:
+                type: array
+                items:
+                  $ref: "#/definitions/Piece"
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 2
+              execute_time: 0.00087
+              resultats:
+                - nom: Capot
+                  aluminium: false
+                  peinture: true
+                  hors_sinistre: false
+                  type_reparation: Echange
+                  impact:
+                    - taille: petit
+                      nombre: 3
+                    - taille: moyen
+                      nombre: 15
+                - nom: Aile AVG
+                  aluminium: true
+                  peinture: false
+                  hors_sinistre: false
+                  type_reparation: Débosselage
+                  impact:
+                    - taille: gros
+                      nombre: 6
+        "400":
+          description: L'identifiant du dossier fourni est invalide.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: "L'identifiant du dossier est invalide."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "401":
+          description: Echec de l'authentification.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous devez vous connecter pour naviguer sur l'application."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "403":
+          description: Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Vous n'avez pas le droit d'accéder à ce dossier."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "404":
+          description: Aucune pièce trouvé pour le dossier.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Aucun dossier n'a été trouvé pour cet identifiant."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+
+    post:
+      summary: Pièce à créer
+      description: |
+        Soumet la création d'une nouvelle pièce pour ce dossier.
+      tags:
+        - Pieces
+      parameters:
+
+        - description: |
+            Identifiant du dossier
+          name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+
+        - description: |
+            Formulaire d'ajout d'une pièce
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Piece'
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "201":
+          description: |
+            Succès de la création de la pièce.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                $ref: '#/definitions/Piece'
+          examples:
+            application/json:
+              response: OK
+              message: |
+                La pièce a été créé avec succès.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats:
+                nom: Capot
+                aluminium: false
+                peinture: true
+                hors_sinistre: false
+                type_reparation: Echange
+                impact:
+                  - taille: petit
+                    nombre: 3
+                  - taille: moyen
+                    nombre: 15
+        "400":
+          description: |
+            Erreur dans les paramètres attendus ou dans l'état de la persistance.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Le formulaire n'est pas valide.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: Echec de l'authentification.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Echec de l'authentification
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: Aucun dossier trouvé.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Le dossier n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "409":
+          description: La pièce en question existe déjà.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La pièce *Capot* existe déjà.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+  /dossiers/{dossier_id}/pieces/{piece_id}:
+    put:
+      summary: Met à jour une pièce
+      description: |
+        Met à jour une pièce depuis son id et son dossier id
+      tags:
+        - pieces
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: dossier_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - description: |
+            Identifiant d'une pièce
+          name: piece_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - description: |
+            Formulaire de mise à jour d'une pièce
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Piece'
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            Succès de la mise à jour de la pièce.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                $ref: '#/definitions/Piece'
+          examples:
+            application/json:
+              response: OK
+              message: |
+                Succès de la mise à jour de la pièce.
+              nb_resultats: 0
+              execute_time: 0.00187
+              resultats: null
+
+
+# Liste des paramètres fréquents
+parameters:
+
+  token:
+    name: token
+    in: query
+    description: |
+      Token destiné à l'authentification
+    required: true
+    type: string
+
+  login:
+    name: login
+    in: query
+    description: |
+      Login de l'utilisateur qui lance la requête
+    required: true
+    type: string
+
+  dsp:
+    name: dsp
+    in: query
+    description: |
+      Booléen pour indiquer si l'on vient ou non de l'application DSP
+    required: true
+    type: boolean
+
+# Liste des définitions des modèles
+definitions:
+
+  ListeDesDossiers:
+    type: array
+    items:
+      title: Dossier
+      required:
+        - dossier_id
+        - nom_prenom
+        - vehicule
+        - statut
+      properties:
+        dossier_id:
+          type: integer
+          description: Identifiant du dossier
+        nom_prenom:
+          type: string
+          description: Nom et prénom de l'assuré
+        vehicule:
+          type: object
+          description: Véhicule lié
+          required:
+            - immatriculation
+          properties:
+            immatriculation:
+              type: string
+              description: Immatriculation du véhicule
+        statut:
+          type: integer
+          description: Statut du dossier, permet de choisir l'icone correspondant au statut
+
+  Dossier:
+    type: object
+    required:
+      - dossier_id
+      - nom_prenom
+      - vehicule
+      - statut
+    properties:
+      dossier_id:
+        type: integer
+        description: Identifiant du dossier
+      nom_prenom:
+        type: string
+        description: Nom et prénom de l'assuré
+      vehicule:
+        $ref: "#/definitions/Vehicule"
+      photos:
+        type: array
+        items:
+          $ref: "#/definitions/Photo"
+      nombre_photos:
+        type: integer
+        description: Nombre de photo du dossier pour la grêle
+      date_rapport:
+        type: string
+        description: Date du rapport
+      montant:
+        type: number
+        description: Montant des réparations défini
+      statut:
+        type: integer
+        description: Statut du dossier, permet de choisir l'icone correspondant au statut
+
+  Vehicule:
+    type: object
+    required:
+      - immatriculation
+    properties:
+      immatriculation:
+        type: string
+        description: Immatriculation du véhicule
+      marque:
+        type: string
+        description: Marque du véhicule à expertiser
+      modele:
+        type: string
+        description: Modèle du véhicule à expertiser
+      nombre_pieces:
+        type:  integer
+        description: Nombre de pièces endommagées sur ce véhicule
+
+  Piece:
+    type: object
+    required:
+      - nom
+      - impact
+      - type_reparation
+      - aluminium
+      - peinture
+      - hors_sinistre
+    properties:
+      nom:
+        type: string
+        description: Nom de la pièce endommagée
+      aluminium:
+        type: boolean
+        description: La pièce est-elle en aluminium ?
+      peinture:
+        type: boolean
+        description: La pièce doit-elle être peinte ?
+      hors_sinistre:
+        type: boolean
+        description: La pièce a-t-elle été endommagé avant le sinistre ?
+      type_reparation:
+        type: string
+        description: Libellé du type de réparation à faire.
+      impact:
+        type: array
+        items:
+          $ref: "#/definitions/Impact"
+  Impact:
+    type: object
+    required:
+      - taille
+      - nombre
+    properties:
+      taille:
+        type: string
+        description: Taille de l'impact en toute lettre
+        enum:
+          - petit
+          - moyen
+          - gros
+      nombre:
+        type: integer
+        description: Nombre d'impacts présent avec ce diamètre sur la pièce correspondante
+
+  Photo:
+    type: object
+    properties:
+      url:
+        type: string
+        description: Url de la photo en vue de l'afficher
+      photo_id:
+        type: integer
+        description: Identifiant de l'image
+
+
+  Returner:
+    type: object
+    required:
+      - message
+      - response
+      - resultats
+      - nb_resultats
+      - execute_time
+    properties:
+      message:
+        type: string
+        description: Message sur le statut de la requête.
+      response:
+        type: string
+        description: Statut de la requete.
+      nb_resultats:
+        type: integer
+        format: int32
+        description: Nombre de résultats de la requête
+      execute_time:
+        type: number
+        description: Temps de l'exécution de la requête
+      new_token:
+        type: string
+        description: Nouveau token à utiliser pour les prochains appels
+      resultats:
+        type: array
+        description: Résultat de la requete, peut être un tableau vide.
+        items:
+          type: string
