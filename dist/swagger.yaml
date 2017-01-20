@@ -220,8 +220,11 @@ paths:
                   marque: Peugeot
                   modele: 206
                   nombre_pieces: 2
-                nombre_photos: 1
-                statut: 2
+                photos: []
+                nombre_photos: 0
+                statut: 1
+                afficher_btn_expertiser: false
+                afficher_btn_proces_verbal: false
         "400":
           description: Identifiant du dossier invalide.
           schema:
@@ -774,6 +777,116 @@ paths:
               execute_time: 0.00087
               resultats: null
 
+  /cabinets/{id}/dossiers:
+    get:
+      summary: Liste des dossiers du cabinet
+      description: |
+        Liste des dossiers du cabinet fourni en paramètres
+      tags:
+        - Dossier
+        - Cabinet
+      parameters:
+        - name: id
+          description: |
+            Identifiant du cabinet
+          in: path
+          type: integer
+          format: int32
+          required: true
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            Liste de dossier
+          schema:
+            $ref: '#/definitions/ListeDesDossiers'
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 4
+              execute_time: 0.00087
+              resultats:
+                - dossier_id: 1
+                  nom_prenom: Dupont Luc
+                  vehicule:
+                    immatriculation: DJ-925-AL
+                  statut: 2
+                - dossier_id: 2
+                  nom_prenom: Marc Trollou
+                  vehicule:
+                    immatriculation: AP-832-DD
+                  statut: 1
+                - dossier_id: 3
+                  nom_prenom: Julien Odre
+                  vehicule:
+                    immatriculation: JO-278-PP
+                  statut: 1
+                - dossier_id: 4
+                  nom_prenom: Yannick Drouzé
+                  vehicule:
+                    immatriculation: YD-132-DD
+                  statut: 2
+              current_page: 0
+              limit: 15
+
+        "400":
+          description: |
+            L'identifiant transmis n'est pas valide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                L'identifiant transmis n'est pas valide.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Vous n'avez pas de droit d'accéder à ces dossiers.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de supprimer cette pièce.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun dossier trouvé.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Aucun dossier trouvé.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
 # Liste des paramètres fréquents
 parameters:
 
@@ -821,14 +934,7 @@ definitions:
           type: string
           description: Nom et prénom de l'assuré
         vehicule:
-          type: object
-          description: Véhicule lié
-          required:
-            - immatriculation
-          properties:
-            immatriculation:
-              type: string
-              description: Immatriculation du véhicule
+          $ref: '#/definitions/VehiculeImmat'
         statut:
           type: integer
           description: Statut du dossier, permet de choisir l'icone correspondant au statut
@@ -839,7 +945,11 @@ definitions:
       - dossier_id
       - nom_prenom
       - vehicule
+      - photos
+      - nombre_photos
       - statut
+      - afficher_btn_expertiser
+      - afficher_btn_proces_verbal
     properties:
       dossier_id:
         type: integer
@@ -865,11 +975,22 @@ definitions:
       statut:
         type: integer
         description: Statut du dossier, permet de choisir l'icone correspondant au statut
+      afficher_btn_expertiser:
+        type: boolean
+        description: |
+          Défini si le bouton "Expertiser le véhicule" est affichable.
+      afficher_btn_proces_verbal:
+        type: boolean
+        description: |
+          Défini si le bouton "Etablir le procès verbal" est affichable.
 
   Vehicule:
     type: object
     required:
       - immatriculation
+      - marque
+      - modele
+      - nombre_pieces
     properties:
       immatriculation:
         type: string
@@ -883,6 +1004,15 @@ definitions:
       nombre_pieces:
         type:  integer
         description: Nombre de pièces endommagées sur ce véhicule
+
+  VehiculeImmat:
+    type: object
+    required:
+      - immatriculation
+    properties:
+      immatriculation:
+        type: string
+        description: Immatriculation du véhicule
 
   Piece:
     type: object
@@ -932,6 +1062,9 @@ definitions:
 
   Photo:
     type: object
+    required:
+        - url
+        - photo_id
     properties:
       url:
         type: string
@@ -939,7 +1072,6 @@ definitions:
       photo_id:
         type: integer
         description: Identifiant de l'image
-
 
   Returner:
     type: object
