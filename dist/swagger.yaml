@@ -382,7 +382,6 @@ paths:
       tags:
         - Pieces
       parameters:
-
         - description: |
             Identifiant du dossier
           name: id
@@ -516,6 +515,204 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
+
+  /dossiers/{id}/grilles/prix:
+    get:
+      summary: Listes des prix des grilles
+      description: |
+        Liste des prix calculés selon les impacts sur les différentes pièces selon les barèmes des différentes grilles
+      tags:
+        - Dossier
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            Grilles présentes
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels
+              resultats:
+                $ref: "#/definitions/ListePrixGrilles"
+          examples:
+            application/json:
+              response: OK
+              message: |
+                Liste des prix des différentes grilles.
+              nb_resultats: 3
+              execute_time: 0.00077
+              resultats:
+                - nom_grille: Dent Wizard
+                  montant: 2000.00
+                - nom_grille: Go Tech
+                  montant: 2600.30
+                - nom_grille: Grele Master
+                  montant: 1900.00
+
+        "400":
+          description: |
+            L'identifiant du dossier n'est pas valide.
+          schema:
+             $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                L'identifiant transmis n'est pas valide.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun dossier trouvé pour cet identifiant.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+  /dossiers/{id}/proces_verbal:
+    post:
+      summary: Génération du procès verbal d'un dossier DSP
+      description: |
+        Génération d'un procès verbal d'expertise d'un dossier DSP depuis un identifiant de dossier et de différentes informations.
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+        - name: body
+          in: body
+          description: |
+            Informations indispensable pour créer le procès verbal
+          required: true
+          schema:
+            $ref: '#/definitions/ProcesVerbalFormulaire'
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "201":
+          description: |
+            Succès de la génération du procès verbal
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: OK
+              message: |
+                La procès verbal a été créé avec succès.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "400":
+          description: |
+            Identifiant invalide ou formulaire mal renseigné
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Il manque des informations ou elles sont invalides pour générer le procès verbal.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+
 
   /dossiers/{dossier_id}/pieces/{piece_id}:
     put:
@@ -779,9 +976,9 @@ paths:
 
   /cabinets/{id}/dossiers:
     get:
-      summary: Liste des dossiers du cabinet
+      summary: Liste des dossiers d'un cabinet
       description: |
-        Liste des dossiers du cabinet fourni en paramètres
+        Liste des dossiers d'un cabinet depuis un critère
       tags:
         - Dossier
         - Cabinet
@@ -916,6 +1113,41 @@ parameters:
 
 # Liste des définitions des modèles
 definitions:
+
+  ProcesVerbalFormulaire:
+    type: object
+    description: |
+      Informations indispensable pour créer le procès verbal
+    required:
+      - signature_expert
+      - montant
+    properties:
+      temps_redressage_1:
+        type: number
+        description: Le temps de redressage numero un
+      temps_redressage_2:
+        type: number
+        description: Le temps de redressage numero deux
+      temps_peinture:
+        type: number
+        description: Le temps necessaire pour peindre les pièces endommagées
+      est_reparable:
+        type: string
+        description: |
+          Texte des boutons indiquant si le véhicule est "Réparable" ou "A l'étude" ou "Non réparable"
+      montant:
+        type: number
+        description: |
+          Montant d'engagement sur le coût total des réparations vu entre le garage et l'expert.
+      signature_expert:
+        type: string
+        description: |
+          Type FILE - Signature de l'expert pour certifié que c'est bien lui qui a établi ce PV
+      signature_reparateur:
+        type: string
+        description: |
+          Type FILE - Signature du réparateur pour certifié que c'est bien lui qui va réparer pour ce montant
+
 
   ListeDesDossiers:
     type: array
@@ -1103,3 +1335,25 @@ definitions:
         description: Résultat de la requete, peut être un tableau vide.
         items:
           type: string
+
+  Grille:
+    type: object
+    required:
+      - nom_grille
+      - montant
+    properties:
+      nom_grille:
+        type: string
+        description: |
+          Nom de la grille de DSP
+      montant:
+        type: number
+        description: |
+          Montant décimal du chiffrage selon la taille et le nombre d'impact pour cette grille
+
+
+  ListePrixGrilles:
+    type: array
+    items:
+      $ref: '#/definitions/Grille'
+
