@@ -641,19 +641,64 @@ paths:
       summary: Génération du procès verbal d'un dossier DSP
       description: |
         Génération d'un procès verbal d'expertise d'un dossier DSP depuis un identifiant de dossier et de différentes informations.
+      tags:
+        - Dossier
       parameters:
         - name: id
           in: path
           type: integer
           format: int64
           required: true
-        - name: body
-          in: body
+
+        - name: temps_redressage_1
+          type: number
+          in: formData
+          required: false
           description: |
-            Informations indispensable pour créer le procès verbal
+            Le temps de redressage numero un
+
+        - name: temps_redressage_2
+          in: formData
+          required: false
+          type: number
+          description: |
+            Le temps de redressage numero deux
+
+        - name: temps_peinture
+          in: formData
+          required: false
+          type: number
+          description: |
+            Le temps necessaire pour peindre les pièces endommagées
+
+        - name: est_reparable
+          in: formData
           required: true
-          schema:
-            $ref: '#/definitions/ProcesVerbalFormulaire'
+          type: string
+          description: |
+            Texte des boutons indiquant si le véhicule est "Réparable" ou "A l'étude" ou "Non réparable"
+
+        - name: montant
+          in: formData
+          required: true
+          type: number
+          description: |
+            Montant d'engagement sur le coût total des réparations vu entre le réparateur et l'expert.
+
+        - name: signature_expert
+          in: formData
+          required: true
+          type: file
+          description: |
+            Signature de l'expert pour certifié que c'est bien lui qui a établi ce PV
+
+        - name: signature_reparateur
+          in: formData
+          required: true
+          type: file
+          description: |
+            Signature du réparateur pour certifié que c'est bien lui qui va réparer pour ce montant
+
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/dsp'
@@ -711,8 +756,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
-
 
   /dossiers/{dossier_id}/pieces/{piece_id}:
     put:
@@ -1114,41 +1157,6 @@ parameters:
 # Liste des définitions des modèles
 definitions:
 
-  ProcesVerbalFormulaire:
-    type: object
-    description: |
-      Informations indispensable pour créer le procès verbal
-    required:
-      - signature_expert
-      - montant
-    properties:
-      temps_redressage_1:
-        type: number
-        description: Le temps de redressage numero un
-      temps_redressage_2:
-        type: number
-        description: Le temps de redressage numero deux
-      temps_peinture:
-        type: number
-        description: Le temps necessaire pour peindre les pièces endommagées
-      est_reparable:
-        type: string
-        description: |
-          Texte des boutons indiquant si le véhicule est "Réparable" ou "A l'étude" ou "Non réparable"
-      montant:
-        type: number
-        description: |
-          Montant d'engagement sur le coût total des réparations vu entre le garage et l'expert.
-      signature_expert:
-        type: string
-        description: |
-          Type FILE - Signature de l'expert pour certifié que c'est bien lui qui a établi ce PV
-      signature_reparateur:
-        type: string
-        description: |
-          Type FILE - Signature du réparateur pour certifié que c'est bien lui qui va réparer pour ce montant
-
-
   ListeDesDossiers:
     type: array
     items:
@@ -1356,4 +1364,3 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/Grille'
-
