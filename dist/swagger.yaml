@@ -28,7 +28,15 @@ paths:
               - les _3 types de réparations disponible_ pour les boutons dans les pièces.
               - Le _token_ à passer dans chacun des appels suivant.
           schema:
+            title: RetourLogin
             type: object
+            required:
+              - response
+              - message
+              - nb_resultats
+              - execute_time
+              - token
+              - resultats
             properties:
               response:
                 type: string
@@ -44,17 +52,21 @@ paths:
                 description: Temps de l'exécution de la requête
               token:
                 type: string
-                description: Jeton à transmettre dans chaqu'un des appels suivant
+                description: Jeton à transmettre dans chacun des appels suivant
               resultats:
+                title: ResultatRequete
                 type: object
                 required:
-                  - pieces_disponibles
-                  - type_reparations
+                  - pieces_disponible
+                  - type_reparation
+                  - expert
                 properties:
-                  pieces_disponibles:
+                  pieces_disponible:
                     $ref: "#/definitions/ListePieceDisponible"
-                  type_reparations:
+                  type_reparation:
                     $ref: "#/definitions/ListeTypeReparationDisponible"
+                  expert:
+                    $ref: "#/definitions/InformationsExpert"
           examples:
             application/json:
               response: OK
@@ -2015,7 +2027,6 @@ definitions:
     properties:
       type_reparation_id:
         type: integer
-        
         description: |
           Identifiant du type de réparation
       libelle:
@@ -2026,12 +2037,12 @@ definitions:
   ListePieceDisponible:
     type: array
     items:
-      - $ref: "#/definitions/TypePiece"
+      $ref: "#/definitions/TypePiece"
 
   ListeTypeReparationDisponible:
     type: array
     items:
-      - $ref: "#/definitions/TypeReparation"
+      $ref: "#/definitions/TypeReparation"
 
   TypePiece:
     type: object
@@ -2041,7 +2052,6 @@ definitions:
     properties:
       type_piece_id:
         type: integer
-        
         description: |
           Identifiant du type de la pièce
       libelle:
@@ -2133,3 +2143,23 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/Grille'
+
+  InformationsExpert:
+    type: object
+    required:
+      - cabinet_id
+      - expert_id
+      - login
+    properties:
+      cabinet_id:
+        type: integer
+        description: |
+          Identifiant du cabinet dans lequel se trouve l'expert authentifié.
+      expert_id:
+        type: integer
+        description: |
+          Identifiant de l'expert authentifié.
+      login:
+        type: string
+        description: |
+          Login de l'expert authentifié.
