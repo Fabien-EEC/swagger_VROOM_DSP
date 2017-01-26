@@ -17,7 +17,7 @@ paths:
       parameters:
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -114,7 +114,7 @@ paths:
           format: date
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
         - name: start
           in: query
           description: |
@@ -254,7 +254,7 @@ paths:
           format: int64
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: Dossier récupéré depuis sont identifiant
@@ -364,7 +364,7 @@ paths:
           format: int32
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -495,7 +495,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "201":
           description: |
@@ -623,7 +623,7 @@ paths:
           format: int32
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -744,7 +744,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "201":
           description: |
@@ -865,7 +865,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -977,7 +977,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1141,7 +1141,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "201":
           description: |
@@ -1229,7 +1229,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1355,7 +1355,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1492,7 +1492,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1618,7 +1618,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1733,7 +1733,7 @@ paths:
           required: true
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
+        - $ref: '#/parameters/origin'
       responses:
         "200":
           description: |
@@ -1842,13 +1842,13 @@ parameters:
     required: true
     type: string
 
-  dsp:
-    name: dsp
+  origin:
+    name: origin
     in: query
     description: |
-      Booléen pour indiquer si l'on vient ou non de l'application DSP
+      Nom de l'application appelante pour indiquer de quelle application on vient DSP, le paramètre qui doit être fourni si on vient de l'application grêle sera celui là "DSP"
     required: true
-    type: boolean
+    type: string
 
 # Liste des définitions des modèles
 definitions:
