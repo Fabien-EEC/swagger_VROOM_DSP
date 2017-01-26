@@ -1,6 +1,4 @@
 swagger: '2.0'
-
-# This is your document metadata
 info:
   version: "1.0.0"
   title: VROOM DSP
@@ -9,13 +7,94 @@ info:
 produces:
   - "application/json"
 paths:
+  /login:
+    get:
+      summary: Première connexion
+      description: |
+        Première connexion en vue d'obtenir un token qui sera transmis à chaque appel et des données pour le mode hors connexion
+      tags:
+        - Authentification
+      parameters:
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            Succès de l'authentification:
+            =============================
+            Les données retournées sont **nécessaire au mode hors connexion**, ces données sont les suivantes :
+              - La _liste des pièces disponible_ en vue de remplir la liste des pièces à choisir.
+              - les _3 types de réparations disponible_ pour les boutons dans les pièces.
+              - Le _token_ à passer dans chacun des appels suivant.
+          schema:
+            type: object
+            properties:
+              response:
+                type: string
+                description: Statut de la requete.
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              nb_resultats:
+                type: integer
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              token:
+                type: string
+                description: Jeton à transmettre dans chaqu'un des appels suivant
+              resultats:
+                type: object
+                required:
+                  - pieces_disponibles
+                  - type_reparations
+                properties:
+                  pieces_disponibles:
+                    $ref: "#/definitions/ListePieceDisponible"
+                  type_reparations:
+                    $ref: "#/definitions/ListeTypeReparationDisponible"
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 2
+              execute_time: 0.00087
+              resultats:
+                pieces_disponible:
+                  - type_piece_id: 1
+                    libelle: Capot
+                  - type_piece_id: 2
+                    libelle: Aile avant droite
+                  - type_piece_id: 3
+                    libelle: Pare-brise
+                type_reparation_disponible:
+                  - type_reparation_id: 1
+                    libelle: Redressage
+                  - type_reparation_id: 2
+                    libelle: Débosselage
+                  - type_reparation_id: 3
+                    libelle: Echange
+              token: $2a$08$oOWPtQtzjaXVQBEbhSc9POrX2h97elXFF/N6l6QYFZXp2rX3tNGwW
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
   /experts/{id}/dossiers/{jour}:
     get:
       summary: Liste des dossiers du jour
       description: |
         Retourne la liste des dossiers de VROOM du jour selon l'identifiant de l'expert et le jour choisi,
-        le tout triés par status et par date d'expertise.
+        le tout trié par statut et par date d'expertise.
       tags:
         - Dossiers
       parameters:
@@ -93,7 +172,8 @@ paths:
               limit:
                 type: string
                 description:  |
-                  le nombre avant la virgule correspond au nombre de dossiers précédents les dossiers retournés, le nombre après la virgule correspond au nombre de dossiers par page.
+                  le nombre avant la virgule correspond au nombre de dossiers précédents les dossiers retournés,
+                  après au nombre de dossiers par page.
           examples:
             application/json:
               response: OK
@@ -113,15 +193,14 @@ paths:
                   statut: 1
               current_page: 0
               limit: 15
-
         "400":
-          description: Identifiant(s) fourni(s) invalide(s)
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: "Les identifiants fournis ne sont pas valides."
+              message: "Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres."
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
@@ -148,16 +227,16 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "404":
-            description: Aucun dossier trouvé.
-            schema:
-              $ref: '#/definitions/Returner'
-            examples:
-              application/json:
-                response: FAIL
-                message: "Aucun dossier trouvé pour ce jour."
-                nb_resultats: 0
-                execute_time: 0.00087
-                resultats: 0
+          description: L'identifiant de l'expert n'existe pas.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Aucun dossier trouvé pour ces identifiants."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
   /dossiers/{id}:
     get:
@@ -225,9 +304,16 @@ paths:
                 afficher_btn_expertiser: false
                 afficher_btn_proces_verbal: false
         "400":
-          description: Identifiant du dossier invalide.
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "401":
           description: Vous n'êtes pas authentifié.
           schema:
@@ -254,6 +340,13 @@ paths:
           description: Aucun dossier trouvé.
           schema:
             $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: "Aucun dossier trouvé."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
   /dossiers/{id}/pieces:
     get:
@@ -274,7 +367,8 @@ paths:
         - $ref: '#/parameters/dsp'
       responses:
         "200":
-          description: Liste des pièces endommagées du dossier et liste des pièces disponibles.
+          description: |
+            Liste des pièces endommagées du dossier déjà ajoutées ou liste vide si le dossier ne contient aucune pièce.
           schema:
             type: object
             required:
@@ -303,7 +397,7 @@ paths:
               resultats:
                 type: array
                 items:
-                  $ref: "#/definitions/ListeTypePiece"
+                  $ref: "#/definitions/Piece"
           examples:
             application/json:
               response: OK
@@ -311,40 +405,36 @@ paths:
               nb_resultats: 1
               execute_time: 0.00087
               resultats:
-                pieces_endommagees:
-                  - type_piece_id: 2
-                    aluminium: false
-                    peinture: true
-                    hors_sinistre: false
-                    type_reparation: 1
-                    impact:
-                      - taille: petit
-                        nombre: 3
-                      - taille: moyen
-                        nombre: 15
-                pieces_disponible:
-                  - type_piece_id: 1
-                    libelle: Capot
-                  - type_piece_id: 2
-                    libelle: Aile avant droite
-                  - type_piece_id: 3
-                    libelle: Pare-brise
-                type_reparation_disponible:
-                  - type_reparation_id: 1
-                    libelle: Redressage
-                  - type_reparation_id: 2
-                    libelle: Débosselage
-                  - type_reparation_id: 3
-                    libelle: Echange
-
+                - type_piece_id: 2
+                  aluminium: false
+                  peinture: true
+                  hors_sinistre: false
+                  type_reparation: 1
+                  impact:
+                    - taille: petit
+                      nombre: 3
+                    - taille: moyen
+                      nombre: 15
+                - type_piece_id: 2
+                  aluminium: true
+                  peinture: true
+                  hors_sinistre: true
+                  type_reparation: 1
+                  impact:
+                    - taille: petit
+                      nombre: 3
+                    - taille: moyen
+                      nombre: 15
+                    - taille: gros
+                      nombre: 1
         "400":
-          description: L'identifiant du dossier fourni est invalide.
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: "#/definitions/Returner"
           examples:
             application/json:
               response: FAIL
-              message: "L'identifiant du dossier est invalide."
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
@@ -371,13 +461,13 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "404":
-          description: Aucune pièce trouvé pour le dossier.
+          description: Aucun dossier trouvé.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: "Aucun dossier n'a été trouvé pour cet identifiant."
+              message: "Ce dossier n'existe pas."
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
@@ -456,19 +546,16 @@ paths:
                   - taille: moyen
                     nombre: 15
         "400":
-          description: |
-            Erreur dans les paramètres attendus ou dans l'état de la persistance.
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                Le formulaire n'est pas valide.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
         "401":
           description: Vous n'êtes pas authentifié.
           schema:
@@ -481,7 +568,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -507,7 +593,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
         "409":
           description: La pièce en question existe déjà.
           schema:
@@ -516,7 +601,7 @@ paths:
             application/json:
               response: FAIL
               message: |
-                La pièce *Capot* existe déjà.
+                La pièce *Capot* existe déjà pour ce dossier.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -525,7 +610,7 @@ paths:
     get:
       summary: Liste des photos du dossier
       description: |
-        Liste des photos du dossier depuis l'identifiant fourni
+        Liste des photos du dossier depuis l'identifiant fourni, ou pas de liste si aucune photo n'a été trouvé pour le dossier.
       tags:
         - Dossiers
         - Photos
@@ -583,6 +668,296 @@ paths:
                   url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
                 - photo_id: 1601
                   nom_grille: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+             $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun dossier trouvé pour cet identifiant.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Le dossier n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+    post:
+      summary: Ajouter des photos au dossier
+      description: |
+        Permet d'ajouter une ou plusieurs photo(s) au dossier depuis l'identifiant de celui-ci.
+      tags:
+        - Photos
+        - Dossiers
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: id
+          in: path
+          required: true
+          type: integer
+          format: int32
+
+        - description: |
+            Photos
+          name: photos[]
+          in: formData
+          required: true
+          type: file
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "201":
+          description: |
+            Ajout d'une ou plusieurs photos au dossier.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels
+              resultats:
+                $ref: "#/definitions/ListePhotos"
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 2
+              execute_time: 0.00077
+              resultats:
+                - photo_id: 1601
+                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
+                - photo_id: 1602
+                  nom_grille: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+             $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun dossier trouvé pour cet identifiant.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+  /dossiers/{dossier_id}/photos/{photo_id}:
+    delete:
+      summary: Supprime une photo
+      description: |
+        Supprime une photo depuis son identifiant et l'identifiant du dossier.
+      tags:
+        - Photos
+        - Dossiers
+      parameters:
+        - description: |
+            Identifiant du dossier.
+          name: dossier_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - description: |
+            Identifiant d'une photo.
+          name: photo_id
+          in: path
+          required: true
+          type: integer
+          format: int64
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            La pièce a été supprimé avec succès.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                type: array
+                description: Résultat de la requete, peut être un tableau vide.
+                items:
+                  type: string
+          examples:
+            application/json:
+              response: OK
+              message: |
+                La photo a été supprimé avec succès.
+              nb_resultats: 0
+              execute_time: 0.00077
+              resultats: null
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "403":
+          description: |
+            Vous n'avez pas de droit de supprimer cette photo.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de supprimer cette photo.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun photo trouvée.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                La photo n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
 
   /dossiers/{id}/grilles/prix:
     get:
@@ -649,15 +1024,13 @@ paths:
                   montant: 1900.00
 
         "400":
-          description: |
-            L'identifiant du dossier n'est pas valide.
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
              $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                L'identifiant transmis n'est pas valide.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -784,15 +1157,13 @@ paths:
               execute_time: 0.00087
               resultats: null
         "400":
-          description: |
-            Identifiant invalide ou formulaire mal renseigné
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                Il manque des informations ou elles sont invalides pour générer le procès verbal.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -909,15 +1280,13 @@ paths:
                   - taille: moyen
                     nombre: 15
         "400":
-          description: |
-            Les informations fournies ne sont pas bonne
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                Les données transmises sont invalides.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1030,15 +1399,13 @@ paths:
               execute_time: 0.00077
               resultats: null
         "400":
-          description: |
-            Les informations fournies ne sont pas bonne
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                Les données transmises sont invalides.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1080,6 +1447,270 @@ paths:
               response: FAIL
               message: |
                 La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+  /dossiers/{dossier_id}/pieces/{type_piece_id}/impacts/{taille}:
+    put:
+      summary: Met à jour un impact d'une pièce
+      description: |
+        Met à jour un impact d'une pièce depuis le type id de celle-ci, l'id du dossier et la taille de la pièce, unique par dossier
+      tags:
+        - Pieces
+        - Impacts
+        - Dossiers
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: dossier_id
+          in: path
+          required: true
+          type: integer
+
+        - description: |
+            Identifiant du type d'une pièce, unique par dossier
+          name: type_piece_id
+          in: path
+          required: true
+          type: integer
+
+        - description: |
+            Chaine de caractère unique par dossier ("petit", "moyen" ou "gros")
+          name: taille
+          in: path
+          required: true
+          type: string
+
+        - description: |
+            Formulaire de mise à jour de l'impact
+          name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Impact"
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            Succès de la mise à jour
+            ========================
+            L'impact à bien été mis à jour et est retourné dans la réponse.
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                $ref: '#/definitions/Impact'
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 1
+              execute_time: 0.00077
+              resultats:
+                - taille: petit
+                  nombre: 4
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Dossier interdit pour cet utilisateur.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de modifier ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: Aucun dossier, pièce ou impact trouvé pour la mise à jour.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                L'impact n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+    delete:
+      summary: Supprime un impact
+      description: |
+        Supprime un impact d'une pièce depuis l'id de celle-ci, l'id du dossier et la taille de l'impact.
+      tags:
+        - Pieces
+        - Impacts
+        - Dossiers
+      parameters:
+        - description: |
+            Identifiant du dossier
+          name: dossier_id
+          in: path
+          required: true
+          type: integer
+
+        - description: |
+            Identifiant du type d'une pièce, unique par dossier
+          name: type_piece_id
+          in: path
+          required: true
+          type: integer
+
+        - description: |
+            Chaine de caractère unique par dossier ("petit", "moyen" ou "gros")
+          name: taille
+          in: path
+          required: true
+          type: string
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+      responses:
+        "200":
+          description: |
+            L'impact a été supprimé avec succès
+            ===================================
+          schema:
+            type: object
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                format: int32
+                description: Nombre de résultats de la requête.
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête.
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels.
+              resultats:
+                type: array
+                description: Résultat de la requete, peut être un tableau vide.
+                items:
+                  type: string
+          examples:
+            application/json:
+              response: OK
+              message: |
+                L'impact a été supprimé avec succès.
+              nb_resultats: 0
+              execute_time: 0.00077
+              resultats: null
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "401":
+          description: |
+            Vous n'êtes pas authentifié.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'êtes pas authentifié
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
+        "403":
+          description: |
+            Vous n'avez pas de droit de supprimer cet impact.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de supprimer cet impact.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Aucun dossier, pièce ou impact trouvé pour la suppression.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                L'impact n'existe pas.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1140,15 +1771,13 @@ paths:
               limit: 15
 
         "400":
-          description: |
-            L'identifiant transmis n'est pas valide.
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
-              message: |
-                L'identifiant transmis n'est pas valide.
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1394,24 +2023,15 @@ definitions:
         description: |
           Libellé du type de réparation ("Echange", "Redressage", "Débosselage")
 
-  ListeTypePiece:
-    type: object
-    required:
-      - pieces_disponible
-      - type_reparation_disponible
-    properties:
-      pieces_endommagees:
-        type: array
-        items:
-          - $ref: "#/definitions/Piece"
-      pieces_disponible:
-        type: array
-        items:
-          - $ref: "#/definitions/TypePiece"
-      type_reparation_disponible:
-        type: array
-        items:
-          - $ref: "#/definitions/TypeReparation"
+  ListePieceDisponible:
+    type: array
+    items:
+      - $ref: "#/definitions/TypePiece"
+
+  ListeTypeReparationDisponible:
+    type: array
+    items:
+      - $ref: "#/definitions/TypeReparation"
 
   TypePiece:
     type: object
@@ -1449,8 +2069,8 @@ definitions:
   Photo:
     type: object
     required:
-        - photo_id
-        - url
+      - photo_id
+      - url
     properties:
       photo_id:
         type: integer
@@ -1458,6 +2078,11 @@ definitions:
       url:
         type: string
         description: Url de la photo en vue de l'afficher
+
+  ListePhotos:
+    type: array
+    items:
+      $ref: "#/definitions/Photo"
 
   Returner:
     type: object
@@ -1476,7 +2101,6 @@ definitions:
         description: Statut de la requete.
       nb_resultats:
         type: integer
-        format: int32
         description: Nombre de résultats de la requête
       execute_time:
         type: number
