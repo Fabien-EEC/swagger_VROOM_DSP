@@ -91,7 +91,7 @@ paths:
 
   /experts/{id}/dossiers/{jour}:
     get:
-      summary: Liste des dossiers du jour
+      summary: Liste les dossiers du jour
       description: |
         Retourne la liste des dossiers de VROOM du jour selon l'identifiant de l'expert et le jour choisi,
         le tout trié par statut et par date d'expertise.
@@ -240,7 +240,7 @@ paths:
 
   /dossiers/{id}:
     get:
-      summary: Informations d'un dossier
+      summary: Retourne les informations d'un dossier
       description: |
         Retourne le dossier depuis son identifiant
       tags:
@@ -350,7 +350,7 @@ paths:
 
   /dossiers/{id}/pieces:
     get:
-      summary: Liste des pièces endommagées du dossier
+      summary: Liste les pièces endommagées du dossier
       description: |
         Retourne les pièces endommagées du dossier depuis l'identifiant de celui-ci.
       tags:
@@ -608,7 +608,7 @@ paths:
 
   /dossiers/{id}/photos:
     get:
-      summary: Liste des photos du dossier
+      summary: Liste les photos du dossier
       description: |
         Liste des photos du dossier depuis l'identifiant fourni, ou pas de liste si aucune photo n'a été trouvé pour le dossier.
       tags:
@@ -720,7 +720,7 @@ paths:
               resultats: null
 
     post:
-      summary: Ajouter des photos au dossier
+      summary: Ajoute des photos au dossier
       description: |
         Permet d'ajouter une ou plusieurs photo(s) au dossier depuis l'identifiant de celui-ci.
       tags:
@@ -961,7 +961,7 @@ paths:
 
   /dossiers/{id}/grilles/prix:
     get:
-      summary: Listes des prix des grilles
+      summary: Liste les prix des grilles
       description: |
         Liste des prix calculés selon les impacts sur les différentes pièces selon les barèmes des différentes grilles
       tags:
@@ -1078,7 +1078,7 @@ paths:
 
   /dossiers/{id}/proces_verbal:
     post:
-      summary: Génération du procès verbal d'un dossier DSP
+      summary: Génére le procès verbal d'un dossier DSP
       description: |
         Génération d'un procès verbal d'expertise d'un dossier DSP depuis un identifiant de dossier et de différentes informations.
       tags:
@@ -1357,7 +1357,7 @@ paths:
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/dsp'
       responses:
-        "204":
+        "200":
           description: |
             La pièce a été supprimé avec succès.
           schema:
@@ -1717,7 +1717,7 @@ paths:
 
   /cabinets/{id}/dossiers:
     get:
-      summary: Liste des dossiers d'un cabinet
+      summary: Liste les dossiers d'un cabinet
       description: |
         Liste des dossiers d'un cabinet depuis un critère
       tags:
