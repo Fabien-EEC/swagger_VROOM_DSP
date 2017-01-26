@@ -104,7 +104,7 @@ paths:
             Identifiant de l'expert choisi
           required: true
           type: integer
-          format: int64
+          
         - name: jour
           in: path
           description: |
@@ -121,7 +121,7 @@ paths:
             Correspond au numéro de la page
           required: false
           type: integer
-          format: int32
+          
           minimum: 0
         - name: limit
           in: query
@@ -129,7 +129,7 @@ paths:
             Nombre de dossiers à retourner pour chaque page
           required: false
           type: integer
-          format: int32
+          
 
       responses:
         "200":
@@ -153,7 +153,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -165,7 +165,7 @@ paths:
                 $ref: '#/definitions/ListeDesDossiers'
               current_page:
                 type: integer
-                format: int32
+                
                 description: |
                   Numéro de la page actuelle commence à 0
                 minimum: 0
@@ -251,7 +251,7 @@ paths:
           description: Identifiant unique du dossier
           required: true
           type: integer
-          format: int64
+          
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -275,7 +275,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -361,7 +361,7 @@ paths:
           description: Identifiant du dossier
           required: true
           type: integer
-          format: int32
+          
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -386,7 +386,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -484,7 +484,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int32
+          
 
         - description: Formulaire de création d'une pièce
           name: body
@@ -517,7 +517,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -620,7 +620,7 @@ paths:
           description: Identifiant du dossier
           required: true
           type: integer
-          format: int32
+          
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -645,7 +645,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -733,7 +733,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int32
+          
 
         - description: |
             Photos
@@ -766,7 +766,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -853,7 +853,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - description: |
             Identifiant d'une photo.
@@ -861,7 +861,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -887,7 +887,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -973,7 +973,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int32
+          
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -999,7 +999,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -1087,7 +1087,7 @@ paths:
         - name: id
           in: path
           type: integer
-          format: int64
+          
           required: true
 
         - name: temps_redressage_1
@@ -1209,7 +1209,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - description: |
             Identifiant du type d'une pièce, unique par
@@ -1217,7 +1217,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - description: |
             Formulaire de mise à jour d'une pièce
@@ -1251,7 +1251,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1343,7 +1343,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - description: |
             Identifiant du type d'une pièce, unique par dossier
@@ -1351,7 +1351,7 @@ paths:
           in: path
           required: true
           type: integer
-          format: int64
+          
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1377,7 +1377,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1516,7 +1516,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1641,7 +1641,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                format: int32
+                
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1729,7 +1729,7 @@ paths:
             Identifiant du cabinet
           in: path
           type: integer
-          format: int32
+          
           required: true
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1999,7 +1999,7 @@ definitions:
         description: La pièce a-t-elle été endommagé avant le sinistre ?
       type_reparation:
         type: integer
-        format: int32
+        
         description: |
           Identifiant du type de réparation à faire, tableau associatif fourni lors du GET /dossiers/{id}/pieces.
       impact:
@@ -2015,7 +2015,7 @@ definitions:
     properties:
       type_reparation_id:
         type: integer
-        format: int32
+        
         description: |
           Identifiant du type de réparation
       libelle:
@@ -2041,7 +2041,7 @@ definitions:
     properties:
       type_piece_id:
         type: integer
-        format: int32
+        
         description: |
           Identifiant du type de la pièce
       libelle:
