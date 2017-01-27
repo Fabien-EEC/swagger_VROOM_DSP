@@ -1741,11 +1741,11 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /cabinets/{id}/dossiers:
+  /cabinets/{id}/dossiers/{critere}:
     get:
-      summary: Liste les dossiers d'un cabinet
+      summary: Liste les dossiers d'un cabinet par critère
       description: |
-        Liste des dossiers d'un cabinet depuis un critère
+        Liste des dossiers d'un cabinet l'id de celui-ci et depuis un critère fourni en paramètre.
       tags:
         - Dossiers
         - Cabinets
@@ -1755,7 +1755,13 @@ paths:
             Identifiant du cabinet
           in: path
           type: integer
-          
+
+        - name: critere
+          description: |
+            Critère de recherche d'un dossier du cabinet
+          in: path
+          type: string
+
           required: true
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1834,14 +1840,14 @@ paths:
               resultats: null
         "404":
           description: |
-            Aucun dossier trouvé.
+            Le cabinet n'existe pas, l'identifiant ne doit pas être le bon.
           schema:
             $ref: "#/definitions/Returner"
           examples:
             application/json:
               response: FAIL
               message: |
-                Aucun dossier trouvé.
+                Aucun dossier trouvé pour ce cabinet.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
