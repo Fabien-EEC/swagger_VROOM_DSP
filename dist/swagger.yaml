@@ -60,6 +60,7 @@ paths:
                   - pieces_disponible
                   - type_reparation
                   - expert
+                  - grilles_tarifaires
                 properties:
                   pieces_disponible:
                     $ref: "#/definitions/ListePieceDisponible"
@@ -67,6 +68,8 @@ paths:
                     $ref: "#/definitions/ListeTypeReparationDisponible"
                   expert:
                     $ref: "#/definitions/InformationsExpert"
+                  grilles_tarifaires:
+                    $ref: "#/definitions/ListePrixGrilles"
           examples:
             application/json:
               response: OK
@@ -88,6 +91,17 @@ paths:
                     libelle: Débosselage
                   - type_reparation_id: 3
                     libelle: Echange
+                grilles_tarifaires:
+                  - nom_grille: Dent Wizard
+                    montant: 2000.00
+                  - nom_grille: Go Tech
+                    montant: 2600.30
+                  - nom_grille: Grele Master
+                    montant: 1900.00
+                expert:
+                  cabinet_id: 14
+                  expert_id: 1777596
+                  login: EIDWA
               token: $2a$08$oOWPtQtzjaXVQBEbhSc9POrX2h97elXFF/N6l6QYFZXp2rX3tNGwW
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
@@ -1734,7 +1748,7 @@ paths:
         Liste des dossiers d'un cabinet depuis un critère
       tags:
         - Dossiers
-        - Cabinet
+        - Cabinets
       parameters:
         - name: id
           description: |
@@ -1781,7 +1795,6 @@ paths:
                   statut: 2
               current_page: 0
               limit: 15
-
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -1793,7 +1806,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
         "401":
           description: |
             Vous n'êtes pas authentifié.
@@ -1807,7 +1819,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
         "403":
           description: |
             Vous n'avez pas de droit d'accéder à ces dossiers.
