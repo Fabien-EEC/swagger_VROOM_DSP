@@ -4,19 +4,35 @@ info:
   title: VROOM DSP
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
+host: localhost
+basePath: /api
 produces:
   - "application/json"
 paths:
-  /login:
-    get:
+  /user/login:
+    post:
       summary: Première connexion
       description: |
         Première connexion en vue d'obtenir un token qui sera transmis à chaque appel et des données pour le mode hors connexion
       tags:
         - Authentification
+      operationId: user/loginAction
       parameters:
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/login'
+        - name: login
+          in: formData
+          description: |
+            Login de l'utilisateur qui lance la requête
+          required: true
+          type: string
+
+        - name: password
+          in: formData
+          description: |
+            Mot de passe destiné à l'authentification
+          required: true
+          type: string
+          format: password
+
         - $ref: '#/parameters/origin'
       responses:
         "200":
@@ -115,7 +131,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
 
-  /experts/{id}/dossiers/{jour}:
+  /rest/experts/{id}/dossiers/{jour}:
     get:
       summary: Liste les dossiers du jour
       description: |
@@ -130,7 +146,7 @@ paths:
             Identifiant de l'expert choisi
           required: true
           type: integer
-          
+
         - name: jour
           in: path
           description: |
@@ -147,7 +163,7 @@ paths:
             Correspond au numéro de la page
           required: false
           type: integer
-          
+
           minimum: 0
         - name: limit
           in: query
@@ -155,7 +171,7 @@ paths:
             Nombre de dossiers à retourner pour chaque page
           required: false
           type: integer
-          
+
 
       responses:
         "200":
@@ -179,7 +195,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -191,7 +207,7 @@ paths:
                 $ref: '#/definitions/ListeDesDossiers'
               current_page:
                 type: integer
-                
+
                 description: |
                   Numéro de la page actuelle commence à 0
                 minimum: 0
@@ -264,7 +280,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
 
-  /dossiers/{id}:
+  /rest/dossiers/{id}:
     get:
       summary: Retourne les informations d'un dossier
       description: |
@@ -277,7 +293,7 @@ paths:
           description: Identifiant unique du dossier
           required: true
           type: integer
-          
+
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -301,7 +317,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -374,7 +390,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
 
-  /dossiers/{id}/pieces:
+  /rest/dossiers/{id}/pieces:
     get:
       summary: Liste les pièces endommagées du dossier
       description: |
@@ -387,7 +403,7 @@ paths:
           description: Identifiant du dossier
           required: true
           type: integer
-          
+
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -412,7 +428,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -510,7 +526,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: Formulaire de création d'une pièce
           name: body
@@ -543,7 +559,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -632,7 +648,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{id}/photos:
+  /rest/dossiers/{id}/photos:
     get:
       summary: Liste les photos du dossier
       description: |
@@ -646,7 +662,7 @@ paths:
           description: Identifiant du dossier
           required: true
           type: integer
-          
+
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/origin'
@@ -671,7 +687,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -759,7 +775,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: |
             Photos
@@ -792,7 +808,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -864,7 +880,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{dossier_id}/photos/{photo_id}:
+  /rest/dossiers/{dossier_id}/photos/{photo_id}:
     delete:
       summary: Supprime une photo
       description: |
@@ -879,7 +895,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: |
             Identifiant d'une photo.
@@ -887,7 +903,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -913,7 +929,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -985,7 +1001,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{id}/grilles/prix:
+  /rest/dossiers/{id}/grilles/prix:
     get:
       summary: Liste les prix des grilles
       description: |
@@ -999,7 +1015,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1025,7 +1041,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -1102,7 +1118,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{id}/proces_verbal:
+  /rest/dossiers/{id}/proces_verbal:
     post:
       summary: Génére le procès verbal d'un dossier DSP
       description: |
@@ -1113,7 +1129,7 @@ paths:
         - name: id
           in: path
           type: integer
-          
+
           required: true
 
         - name: temps_redressage_1
@@ -1221,7 +1237,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{dossier_id}/pieces/{type_piece_id}:
+  /rest/dossiers/{dossier_id}/pieces/{type_piece_id}:
     put:
       summary: Met à jour une pièce
       description: |
@@ -1235,7 +1251,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: |
             Identifiant du type d'une pièce, unique par
@@ -1243,7 +1259,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: |
             Formulaire de mise à jour d'une pièce
@@ -1277,7 +1293,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1369,7 +1385,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - description: |
             Identifiant du type d'une pièce, unique par dossier
@@ -1377,7 +1393,7 @@ paths:
           in: path
           required: true
           type: integer
-          
+
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1403,7 +1419,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1477,7 +1493,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /dossiers/{dossier_id}/pieces/{type_piece_id}/impacts/{taille}:
+  /rest/dossiers/{dossier_id}/pieces/{type_piece_id}/impacts/{taille}:
     put:
       summary: Met à jour un impact d'une pièce
       description: |
@@ -1542,7 +1558,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1667,7 +1683,7 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-                
+
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -1741,7 +1757,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /cabinets/{id}/dossiers/{critere}:
+  /rest/cabinets/{id}/dossiers/{critere}:
     get:
       summary: Liste les dossiers d'un cabinet par critère
       description: |
@@ -2028,7 +2044,7 @@ definitions:
         description: La pièce a-t-elle été endommagé avant le sinistre ?
       type_reparation:
         type: integer
-        
+
         description: |
           Identifiant du type de réparation à faire, tableau associatif fourni lors du GET /dossiers/{id}/pieces.
       impact:
