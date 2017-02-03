@@ -16,7 +16,6 @@ paths:
         Première connexion en vue d'obtenir un token qui sera transmis à chaque appel et des données pour le mode hors connexion
       tags:
         - Authentification
-      operationId: user/loginAction
       parameters:
         - name: login
           in: formData
@@ -42,7 +41,14 @@ paths:
             Les données retournées sont **nécessaire au mode hors connexion**, ces données sont les suivantes :
               - La _liste des pièces disponible_ en vue de remplir la liste des pièces à choisir.
               - les _3 types de réparations disponible_ pour les boutons dans les pièces.
+              - L'_identifiant_ de l'expert et son _login_.
+              - Les _grilles tarifaires_ des pièces endommagées par la grêle.
               - Le _token_ à passer dans chacun des appels suivant.
+
+            Echec de l'authentification:
+            =============================
+            Les informations fournies ne permettent une authentification valide.
+
           schema:
             title: RetourLogin
             type: object
@@ -94,26 +100,44 @@ paths:
               execute_time: 0.00087
               resultats:
                 pieces_disponible:
-                  - type_piece_id: 1
+                  - id: 1
                     libelle: Capot
-                  - type_piece_id: 2
+                  - id: 2
                     libelle: Aile avant droite
-                  - type_piece_id: 3
+                  - id: 3
                     libelle: Pare-brise
                 type_reparation_disponible:
-                  - type_reparation_id: 1
-                    libelle: Redressage
-                  - type_reparation_id: 2
-                    libelle: Débosselage
-                  - type_reparation_id: 3
-                    libelle: Echange
+                  1: Redressage
+                  2: Débosselage
+                  3: Echange
                 grilles_tarifaires:
-                  - nom_grille: Dent Wizard
-                    montant: 2000.00
-                  - nom_grille: Go Tech
-                    montant: 2600.30
-                  - nom_grille: Grele Master
-                    montant: 1900.00
+                  Dent Wizard:
+                    petit:
+                      1:
+                        taille_impact: petit
+                        nb_impact_min: 1
+                        nb_impact_max: 4
+                        nom_grille: Dent Wizard
+                        montant: 12
+                      5:
+                        taille_impact: petit
+                        nb_impact_min: 5
+                        nb_impact_max: 9
+                        nom_grille: Dent Wizard
+                        montant: 16
+                    moyen:
+                      1:
+                        taille_impact: moyen
+                        nb_impact_min: 1
+                        nb_impact_max: 4
+                        nom_grille: Dent Wizard
+                        montant: 16
+                      5:
+                        taille_impact: moyen
+                        nb_impact_min: 5
+                        nb_impact_max: 9
+                        nom_grille: Dent Wizard
+                        montant: 18
                 expert:
                   expert_id: 1777596
                   login: EIDWA
@@ -2073,10 +2097,10 @@ definitions:
   TypePiece:
     type: object
     required:
-      - type_piece_id
+      - id
       - libelle
     properties:
-      type_piece_id:
+      id:
         type: integer
         description: |
           Identifiant du type de la pièce
@@ -2151,31 +2175,55 @@ definitions:
           type: string
 
   Grille:
-    type: array
-    items:
-      title: Ligne_Grille
-      type: object
-      required:
-        - montant
-        - nb_impact_min
-        - nb_impact_max
-        - date
-      properties:
-        nb_impact_min:
-          type: integer
-          description: |
-            Fouchette basse du nombre d'impact pour correspondre au prix.
-        nb_impact_max:
-          type: integer
-          description: |
-            Fouchette haute du nombre d'impact pour correspondre au prix.
-        montant:
-          type: number
-          description: |
-            Montant décimal du chiffrage selon la taille et le nombre d'impact pour cette grille
-        date:
-          type: string
-          format: date-time
+    type: object
+    required:
+      - nom_grille
+    properties:
+      nom_grille:
+        type: object
+        required:
+          - taille_impact
+        properties:
+          taille_impact:
+            type: object
+            required:
+              - nb_impact_min
+            properties:
+              nb_impact_min:
+                type: object
+                title: Tableau tarifaire
+                required:
+                  - taille_impact
+                  - montant
+                  - nb_impact_min
+                  - nb_impact_max
+                  - date
+                properties:
+                  taille_impact:
+                    type: string
+                    enum:
+                    - petit
+                    - moyen
+                    - gros
+                    description: |
+                      Valeur représentant la taille de l'impact.
+                  nb_impact_min:
+                    type: integer
+                    description: |
+                      Fouchette basse du nombre d'impact pour correspondre au prix.
+                  nb_impact_max:
+                    type: integer
+                    description: |
+                      Fouchette haute du nombre d'impact pour correspondre au prix.
+                  montant:
+                    type: number
+                    description: |
+                      Montant décimal du chiffrage selon la taille et le nombre d'impact pour cette grille
+                  date:
+                    type: string
+                    format: date-time
+                    description: |
+                      Date de la création de cette valeur, permet de différencier l'année de la tarification.
 
   ListePrixGrilles:
     type: array
