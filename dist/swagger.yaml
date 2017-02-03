@@ -83,6 +83,7 @@ paths:
                   - type_reparation
                   - expert
                   - grilles_tarifaires
+                  - nb_impacts_max
                 properties:
                   pieces_disponible:
                     $ref: "#/definitions/ListePieceDisponible"
@@ -92,6 +93,10 @@ paths:
                     $ref: "#/definitions/InformationsExpert"
                   grilles_tarifaires:
                     $ref: "#/definitions/ListePrixGrilles"
+                  nb_impacts_max:
+                    type: integer
+                    description: |
+                      Nombre d'impacts max avant de changer automatiquement le type de réparation par "Echange"
           examples:
             application/json:
               response: OK
@@ -141,6 +146,7 @@ paths:
                 expert:
                   expert_id: 1777596
                   login: EIDWA
+                nb_impacts_max: 200
               token: $2a$08$oOWPtQtzjaXVQBEbhSc9POrX2h97elXFF/N6l6QYFZXp2rX3tNGwW
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
