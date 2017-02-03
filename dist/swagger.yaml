@@ -33,7 +33,7 @@ paths:
           type: string
           format: password
 
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -115,7 +115,6 @@ paths:
                   - nom_grille: Grele Master
                     montant: 1900.00
                 expert:
-                  cabinet_id: 14
                   expert_id: 1777596
                   login: EIDWA
               token: $2a$08$oOWPtQtzjaXVQBEbhSc9POrX2h97elXFF/N6l6QYFZXp2rX3tNGwW
@@ -156,7 +155,7 @@ paths:
           format: date
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
         - name: start
           in: query
           description: |
@@ -296,7 +295,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: Dossier récupéré depuis sont identifiant
@@ -406,7 +405,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -537,7 +536,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "201":
           description: |
@@ -665,7 +664,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -786,7 +785,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "201":
           description: |
@@ -907,7 +906,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1019,7 +1018,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1183,7 +1182,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "201":
           description: |
@@ -1271,7 +1270,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1397,7 +1396,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1534,7 +1533,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1660,7 +1659,7 @@ paths:
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1757,31 +1756,25 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /rest/cabinets/{id}/dossiers/{critere}:
+  /rest/cabinets/dossiers/{critere}:
     get:
       summary: Liste les dossiers d'un cabinet par critère
       description: |
-        Liste des dossiers d'un cabinet l'id de celui-ci et depuis un critère fourni en paramètre.
+        Liste des dossiers d'un cabinet depuis un critère fourni en paramètre.
       tags:
         - Dossiers
         - Cabinets
       parameters:
-        - name: id
-          description: |
-            Identifiant du cabinet
-          in: path
-          type: integer
-
         - name: critere
           description: |
             Critère de recherche d'un dossier du cabinet
           in: path
           type: string
-
           required: true
+
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
-        - $ref: '#/parameters/origin'
+        - $ref: '#/parameters/dsp'
       responses:
         "200":
           description: |
@@ -1887,13 +1880,13 @@ parameters:
     required: true
     type: string
 
-  origin:
-    name: origin
+  dsp:
+    name: dsp
     in: query
     description: |
-      Nom de l'application appelante pour indiquer de quelle application on vient DSP, le paramètre qui doit être fourni si on vient de l'application grêle sera celui là "DSP"
-    required: true
-    type: string
+      Défini si l'application appelante est l'appli VROOM DSP
+    required: false
+    type: boolean
 
 # Liste des définitions des modèles
 definitions:
@@ -2158,19 +2151,31 @@ definitions:
           type: string
 
   Grille:
-    type: object
-    required:
-      - nom_grille
-      - montant
-    properties:
-      nom_grille:
-        type: string
-        description: |
-          Nom de la grille de DSP
-      montant:
-        type: number
-        description: |
-          Montant décimal du chiffrage selon la taille et le nombre d'impact pour cette grille
+    type: array
+    items:
+      title: Ligne_Grille
+      type: object
+      required:
+        - montant
+        - nb_impact_min
+        - nb_impact_max
+        - date
+      properties:
+        nb_impact_min:
+          type: integer
+          description: |
+            Fouchette basse du nombre d'impact pour correspondre au prix.
+        nb_impact_max:
+          type: integer
+          description: |
+            Fouchette haute du nombre d'impact pour correspondre au prix.
+        montant:
+          type: number
+          description: |
+            Montant décimal du chiffrage selon la taille et le nombre d'impact pour cette grille
+        date:
+          type: string
+          format: date-time
 
   ListePrixGrilles:
     type: array
@@ -2180,14 +2185,9 @@ definitions:
   InformationsExpert:
     type: object
     required:
-      - cabinet_id
       - expert_id
       - login
     properties:
-      cabinet_id:
-        type: integer
-        description: |
-          Identifiant du cabinet dans lequel se trouve l'expert authentifié.
       expert_id:
         type: integer
         description: |
