@@ -179,7 +179,7 @@ paths:
         - name: jour
           in: path
           description: |
-            Date des dossiers à récupérer
+            Date des dossiers à récupérer au format YYYY-mm-dd
           required: true
           type: string
           format: date
@@ -236,7 +236,6 @@ paths:
                 $ref: '#/definitions/ListeDesDossiers'
               current_page:
                 type: integer
-
                 description: |
                   Numéro de la page actuelle commence à 0
                 minimum: 0
@@ -254,13 +253,11 @@ paths:
               resultats:
                 - dossier_id: 1
                   nom_prenom: Dupont Luc
-                  vehicule:
-                    immatriculation: DJ-925-AL
+                  immatriculation: DJ-925-AL
                   statut: 2
                 - dossier_id: 2
                   nom_prenom: Marc Trollou
-                  vehicule:
-                    immatriculation: AP-832-DD
+                  immatriculation: AP-832-DD
                   statut: 1
               current_page: 0
               limit: 15
@@ -276,7 +273,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -346,7 +343,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -365,11 +361,10 @@ paths:
               resultats:
                 dossier_id: 1
                 nom_prenom: Dupont Luc
-                vehicule:
-                  immatriculation: DJ-925-AL
-                  marque: Peugeot
-                  modele: 206
-                  nombre_pieces: 2
+                immatriculation: DJ-925-AL
+                marque: Peugeot
+                modele: 206
+                nombre_pieces: 2
                 nombre_photos: 0
                 statut: 1
                 afficher_btn_expertiser: false
@@ -386,7 +381,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -457,7 +452,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -510,7 +504,7 @@ paths:
               execute_time: 0.00087
               resultats: 0
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -556,7 +550,6 @@ paths:
           required: true
           type: integer
 
-
         - description: Formulaire de création d'une pièce
           name: body
           in: body
@@ -588,7 +581,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -628,14 +620,14 @@ paths:
               execute_time: 0.00087
               resultats: null
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -716,7 +708,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -752,14 +743,14 @@ paths:
               resultats: null
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -805,7 +796,6 @@ paths:
           required: true
           type: integer
 
-
         - description: |
             Photos
           name: photos[]
@@ -837,7 +827,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête
               execute_time:
                 type: number
@@ -871,14 +860,14 @@ paths:
               resultats: null
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -925,7 +914,6 @@ paths:
           required: true
           type: integer
 
-
         - description: |
             Identifiant d'une photo.
           name: photo_id
@@ -958,7 +946,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -992,14 +979,14 @@ paths:
               resultats: null
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1044,7 +1031,6 @@ paths:
           in: path
           required: true
           type: integer
-
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
@@ -1108,14 +1094,14 @@ paths:
 
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1158,7 +1144,6 @@ paths:
         - name: id
           in: path
           type: integer
-
           required: true
 
         - name: temps_redressage_1
@@ -1240,14 +1225,14 @@ paths:
               resultats: null
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1363,14 +1348,14 @@ paths:
               resultats: null
 
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1483,14 +1468,14 @@ paths:
 
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1619,14 +1604,14 @@ paths:
               resultats: null
 
         "401":
-          description: Vous n'êtes pas authentifié.
+          description: Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1747,14 +1732,14 @@ paths:
 
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1820,23 +1805,19 @@ paths:
               resultats:
                 - dossier_id: 1
                   nom_prenom: Dupont Luc
-                  vehicule:
-                    immatriculation: DJ-925-AL
+                  immatriculation: DJ-925-AL
                   statut: 2
                 - dossier_id: 2
                   nom_prenom: Marc Trollou
-                  vehicule:
-                    immatriculation: AP-832-DD
+                  immatriculation: AP-832-DD
                   statut: 1
                 - dossier_id: 3
                   nom_prenom: Julien Odre
-                  vehicule:
-                    immatriculation: JO-278-PP
+                  immatriculation: JO-278-PP
                   statut: 1
                 - dossier_id: 4
                   nom_prenom: Yannick Drouzé
-                  vehicule:
-                    immatriculation: YD-132-DD
+                  immatriculation: YD-132-DD
                   statut: 2
               current_page: 0
               limit: 15
@@ -1853,14 +1834,14 @@ paths:
               resultats: null
         "401":
           description: |
-            Vous n'êtes pas authentifié.
+            Votre token est invalide.
           schema:
             $ref: '#/definitions/Returner'
           examples:
             application/json:
               response: FAIL
               message: |
-                Vous n'êtes pas authentifié.
+                Votre token est invalide.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
@@ -1956,7 +1937,7 @@ definitions:
       required:
         - dossier_id
         - nom_prenom
-        - vehicule
+        - immatriculation
         - statut
       properties:
         dossier_id:
@@ -1965,8 +1946,9 @@ definitions:
         nom_prenom:
           type: string
           description: Nom et prénom de l'assuré
-        vehicule:
-          $ref: '#/definitions/VehiculeImmat'
+        immatriculation:
+          type: string
+          description: Immatriculation du véhicule
         statut:
           type: integer
           description: Statut du dossier, permet de choisir l'icone correspondant au statut
@@ -1976,11 +1958,14 @@ definitions:
     required:
       - dossier_id
       - nom_prenom
-      - vehicule
       - nombre_photos
       - statut
       - afficher_btn_expertiser
       - afficher_btn_proces_verbal
+      - immatriculation
+      - marque
+      - modele
+      - nombre_pieces
     properties:
       dossier_id:
         type: integer
@@ -1988,8 +1973,18 @@ definitions:
       nom_prenom:
         type: string
         description: Nom et prénom de l'assuré
-      vehicule:
-        $ref: "#/definitions/Vehicule"
+      immatriculation:
+        type: string
+        description: Immatriculation du véhicule
+      marque:
+        type: string
+        description: Marque du véhicule à expertiser
+      modele:
+        type: string
+        description: Modèle du véhicule à expertiser
+      nombre_pieces:
+        type:  integer
+        description: Nombre de pièces endommagées sur ce véhicule
       nombre_photos:
         type: integer
         description: Nombre de photo du dossier pour la grêle
@@ -2010,36 +2005,6 @@ definitions:
         type: boolean
         description: |
           Défini si le bouton "Etablir le procès verbal" est affichable.
-
-  Vehicule:
-    type: object
-    required:
-      - immatriculation
-      - marque
-      - modele
-      - nombre_pieces
-    properties:
-      immatriculation:
-        type: string
-        description: Immatriculation du véhicule
-      marque:
-        type: string
-        description: Marque du véhicule à expertiser
-      modele:
-        type: string
-        description: Modèle du véhicule à expertiser
-      nombre_pieces:
-        type:  integer
-        description: Nombre de pièces endommagées sur ce véhicule
-
-  VehiculeImmat:
-    type: object
-    required:
-      - immatriculation
-    properties:
-      immatriculation:
-        type: string
-        description: Immatriculation du véhicule
 
   Piece:
     type: object
