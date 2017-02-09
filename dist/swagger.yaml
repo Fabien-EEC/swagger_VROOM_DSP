@@ -189,10 +189,9 @@ paths:
         - name: start
           in: query
           description: |
-            Correspond au numéro de la page
+            Correspond au numéro de la page commence à 0 pour obtenir la première page
           required: false
           type: integer
-
           minimum: 0
         - name: limit
           in: query
@@ -200,6 +199,7 @@ paths:
             Nombre de dossiers à retourner pour chaque page
           required: false
           type: integer
+          minimum: 0
 
 
       responses:
@@ -237,7 +237,7 @@ paths:
               current_page:
                 type: integer
                 description: |
-                  Numéro de la page actuelle commence à 0
+                  Le numéro de la page actuelle commence à 1
                 minimum: 0
               limit:
                 type: string
@@ -259,7 +259,7 @@ paths:
                   nom_prenom: Marc Trollou
                   immatriculation: AP-832-DD
                   statut: 1
-              current_page: 0
+              current_page: 1
               limit: 15
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
@@ -272,17 +272,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous devez vous connecter pour naviguer sur l'application."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: "Vous devez vous connecter pour naviguer sur l'application."
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: 0
         "403":
           description: Dossiers interdits pour cet utilisateur.
           schema:
@@ -380,17 +380,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous devez vous connecter pour naviguer sur l'application."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: "Vous devez vous connecter pour naviguer sur l'application."
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: 0
         "403":
           description: Dossier interdit pour cet utilisateur.
           schema:
@@ -503,17 +503,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous devez vous connecter pour naviguer sur l'application."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: "Vous devez vous connecter pour naviguer sur l'application."
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: 0
         "403":
           description: Dossier interdit pour cet utilisateur.
           schema:
@@ -619,18 +619,18 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -741,19 +741,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -858,19 +858,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -977,19 +977,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
         "403":
           description: |
             Vous n'avez pas de droit de supprimer cette photo.
@@ -1092,19 +1092,19 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1223,19 +1223,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1347,18 +1347,18 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1466,19 +1466,19 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1603,18 +1603,18 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1730,19 +1730,19 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
 
         "403":
           description: |
@@ -1773,16 +1773,16 @@ paths:
 
   /rest/cabinets/dossiers/{critere}:
     get:
-      summary: Liste les dossiers d'un cabinet par critère
+      summary: Liste les dossiers d'un cabinet depuis un critère
       description: |
-        Liste des dossiers d'un cabinet depuis un critère fourni en paramètre.
+        Liste des dossiers d'un cabinet depuis un critère. La recherche sera sur ce critère en testant en premier l'immatriculation / le numéro de dossier et pour finir le Nom prénom de l'assuré.
       tags:
         - Dossiers
         - Cabinets
       parameters:
         - name: critere
           description: |
-            Critère de recherche d'un dossier du cabinet
+            Critère de recherche, peut être une immatriculation, un numéro de dossier ou un nom prénom
           in: path
           type: string
           required: true
@@ -1790,6 +1790,23 @@ paths:
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
         - $ref: '#/parameters/dsp'
+
+        - name: start
+          in: query
+          description: |
+            Correspond au numéro de la page commence à 0 pour obtenir la première page
+          required: false
+          type: integer
+          minimum: 0
+
+        - name: limit
+          in: query
+          description: |
+            Nombre de dossiers à retourner pour chaque page
+          required: false
+          type: integer
+          minimum: 0
+
       responses:
         "200":
           description: |
@@ -1819,7 +1836,7 @@ paths:
                   nom_prenom: Yannick Drouzé
                   immatriculation: YD-132-DD
                   statut: 2
-              current_page: 0
+              current_page: 1
               limit: 15
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
@@ -1832,19 +1849,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-        "401":
-          description: |
-            Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Votre token est invalide.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
+#        "401":
+#          description: |
+#            Votre token est invalide.
+#          schema:
+#            $ref: '#/definitions/Returner'
+#          examples:
+#            application/json:
+#              response: FAIL
+#              message: |
+#                Votre token est invalide.
+#              nb_resultats: 0
+#              execute_time: 0.00087
+#              resultats: null
         "403":
           description: |
             Vous n'avez pas de droit d'accéder à ces dossiers.
@@ -1901,7 +1918,6 @@ parameters:
 
 # Liste des définitions des modèles
 definitions:
-
   AddOrUpdatePiece:
     type: object
     required:
