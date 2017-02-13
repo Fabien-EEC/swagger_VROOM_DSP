@@ -729,7 +729,7 @@ paths:
                 - photo_id: 12
                   url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
                 - photo_id: 1601
-                  nom_grille: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -785,9 +785,12 @@ paths:
       summary: Ajoute des photos au dossier
       description: |
         Permet d'ajouter une ou plusieurs photo(s) au dossier depuis l'identifiant de celui-ci.
+        Les photos doivent être **au format JPG** pour qu'elles soient intégrées.
       tags:
         - Photos
         - Dossiers
+      consumes:
+        - multipart/form-data
       parameters:
         - description: |
             Identifiant du dossier
@@ -798,7 +801,7 @@ paths:
 
         - description: |
             Photos
-          name: photos[]
+          name: photos
           in: formData
           required: true
           type: file
@@ -846,7 +849,7 @@ paths:
                 - photo_id: 1601
                   url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
                 - photo_id: 1602
-                  nom_grille: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -894,6 +897,19 @@ paths:
               response: FAIL
               message: |
                 La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "500":
+          description: |
+            Une erreur c'est produite. Veuillez contacter le service informatique.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Une erreur s'est produite.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
