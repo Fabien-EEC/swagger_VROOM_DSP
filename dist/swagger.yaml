@@ -231,7 +231,7 @@ paths:
                 type: string
                 description: Nouveau token à utiliser pour les prochains appels.
               resultats:
-                $ref: '#/definitions/ListeDesDossiers'
+                $ref: '#/definitions/Dossier'
               current_page:
                 type: integer
                 description: |
@@ -249,16 +249,76 @@ paths:
               nb_resultats: 2
               execute_time: 0.00087
               resultats:
-                - dossier_id: 1121
-                  internal_id: 1
+                - dossier_id: 1
                   nom_prenom: Dupont Luc
                   immatriculation: DJ-925-AL
+                  marque: Peugeot
+                  modele: 206
+                  nombre_pieces: 2
+                  nombre_photos: 0
                   statut: 0
+                  afficher_btn_expertiser: false
+                  afficher_btn_proces_verbal: false
+                  photos: null
+                  pieces:
+                  - type_piece_id: 2
+                    aluminium: false
+                    peinture: true
+                    hors_sinistre: false
+                    type_reparation: 1
+                    impact:
+                      - taille: petit
+                        nombre: 3
+                      - taille: moyen
+                        nombre: 15
+                  - type_piece_id: 2
+                    aluminium: true
+                    peinture: true
+                    hors_sinistre: true
+                    type_reparation: 1
+                    impact:
+                      - taille: petit
+                        nombre: 3
+                      - taille: moyen
+                        nombre: 15
+                      - taille: gros
+                        nombre: 1
+
                 - dossier_id: 1122
                   internal_id: 2
                   nom_prenom: Marc Trollou
                   immatriculation: AP-832-DD
+                  marque: Citroen
+                  modele: C4
+                  nombre_pieces: 1
+                  nombre_photos: 5
                   statut: 1
+                  afficher_btn_expertiser: false
+                  afficher_btn_proces_verbal: false
+                  photos:
+                    - photo_id: 12
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170012/20170012-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 13
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170013/20170013-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 14
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170014/20170014-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 15
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170015/20170015-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 16
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170016/20170016-01-19_20-10-59_AUTRE.pdf
+                  pieces:
+                    - type_piece_id: 3
+                      aluminium: true
+                      peinture: true
+                      hors_sinistre: true
+                      type_reparation: 1
+                      impact:
+                        - taille: petit
+                          nombre: 3
+                        - taille: moyen
+                          nombre: 15
+                        - taille: gros
+                          nombre: 1
               current_page: 1
               limit: 15
         "400":
@@ -553,7 +613,7 @@ paths:
           type: integer
 
         - description: Formulaire de création d'une pièce
-          name: body
+          name: piece
           in: body
           required: true
           schema:
@@ -729,9 +789,9 @@ paths:
               execute_time: 0.00077
               resultats:
                 - photo_id: 12
-                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
+                  url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
                 - photo_id: 1601
-                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+                  url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -849,9 +909,9 @@ paths:
               execute_time: 0.00077
               resultats:
                 - photo_id: 1601
-                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
+                  url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003128/2017003128_2017-01-19_20-10-59_AUTRE.pdf
                 - photo_id: 1602
-                  url: //expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
+                  url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/2017003112/201700312_2017-01-19_20-10-59_AUTRE.pdf
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -1713,36 +1773,86 @@ paths:
       responses:
         "200":
           description: |
-            Liste de dossier
+            Liste de dossiers
           schema:
-            $ref: '#/definitions/ListeDesDossiers'
+            $ref: '#/definitions/Dossier'
           examples:
             application/json:
               response: OK
               message: ""
-              nb_resultats: 4
+              nb_resultats: 2
               execute_time: 0.00087
               resultats:
-                - dossier_id: 1242
-                  internal_id: 1
+                - dossier_id: 1
                   nom_prenom: Dupont Luc
                   immatriculation: DJ-925-AL
+                  marque: Peugeot
+                  modele: 206
+                  nombre_pieces: 2
+                  nombre_photos: 0
                   statut: 0
-                - dossier_id: 1243
+                  afficher_btn_expertiser: false
+                  afficher_btn_proces_verbal: false
+                  photos: null
+                  pieces:
+                  - type_piece_id: 2
+                    aluminium: false
+                    peinture: true
+                    hors_sinistre: false
+                    type_reparation: 1
+                    impact:
+                      - taille: petit
+                        nombre: 3
+                      - taille: moyen
+                        nombre: 15
+                  - type_piece_id: 2
+                    aluminium: true
+                    peinture: true
+                    hors_sinistre: true
+                    type_reparation: 1
+                    impact:
+                      - taille: petit
+                        nombre: 3
+                      - taille: moyen
+                        nombre: 15
+                      - taille: gros
+                        nombre: 1
+
+                - dossier_id: 1122
                   internal_id: 2
                   nom_prenom: Marc Trollou
                   immatriculation: AP-832-DD
+                  marque: Citroen
+                  modele: C4
+                  nombre_pieces: 1
+                  nombre_photos: 5
                   statut: 1
-                - dossier_id: 1244
-                  internal_id: 3
-                  nom_prenom: Julien Odre
-                  immatriculation: JO-278-PP
-                  statut: 1
-                - dossier_id: 1245
-                  internal_id: 4
-                  nom_prenom: Yannick Drouzé
-                  immatriculation: YD-132-DD
-                  statut: 0
+                  afficher_btn_expertiser: false
+                  afficher_btn_proces_verbal: false
+                  photos:
+                    - photo_id: 12
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170012/20170012-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 13
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170013/20170013-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 14
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170014/20170014-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 15
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170015/20170015-01-19_20-10-59_AUTRE.pdf
+                    - photo_id: 16
+                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170016/20170016-01-19_20-10-59_AUTRE.pdf
+                  pieces:
+                    - type_piece_id: 3
+                      aluminium: true
+                      peinture: true
+                      hors_sinistre: true
+                      type_reparation: 1
+                      impact:
+                        - taille: petit
+                          nombre: 3
+                        - taille: moyen
+                          nombre: 15
+                        - taille: gros
+                          nombre: 1
               current_page: 1
               limit: 15
         "400":
@@ -1853,36 +1963,6 @@ definitions:
         items:
           $ref: "#/definitions/Impact"
 
-  ListeDesDossiers:
-    type: array
-    items:
-      title: Dossier
-      required:
-        - dossier_id
-        - internal_id
-        - nom_prenom
-        - immatriculation
-        - statut
-      properties:
-        dossier_id:
-          type: integer
-          description: |
-            Identifiant unique d'un dossier servira à sélectionner les dossiers voulus.
-        internal_id:
-          type: integer
-          description: |
-            Identifiant d'un dossier en vue de l'afficher ou de faire la recherche par critère, cet identifiant est relatif
-            au cabinet. Ce identifiant existe donc plusieurs fois cependant il concerne des cabinets différents.
-        nom_prenom:
-          type: string
-          description: Nom et prénom de l'assuré
-        immatriculation:
-          type: string
-          description: Immatriculation du véhicule
-        statut:
-          type: integer
-          description: Statut du dossier, permet de choisir l'icone correspondant au statut
-
   Dossier:
     type: object
     required:
@@ -1896,6 +1976,8 @@ definitions:
       - marque
       - modele
       - nombre_pieces
+      - photos
+      - pieces
     properties:
       dossier_id:
         type: integer
@@ -1935,6 +2017,14 @@ definitions:
         type: boolean
         description: |
           Défini si le bouton "Etablir le procès verbal" est affichable.
+      photos:
+        type: array
+        items:
+          $ref: '#/definitions/Photo'
+      pieces:
+        type: array
+        items:
+          $ref: '#/definitions/Piece'
 
   Piece:
     type: object
