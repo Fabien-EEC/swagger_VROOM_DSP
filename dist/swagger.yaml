@@ -421,6 +421,7 @@ paths:
         Retourne les pièces endommagées du dossier depuis l'identifiant de celui-ci.
       tags:
         - Pieces
+        - Dossiers
       parameters:
         - name: id
           in: path
@@ -543,6 +544,7 @@ paths:
         Soumet la création d'une nouvelle pièce pour ce dossier.
       tags:
         - Pieces
+        - Dossiers
       parameters:
         - description: Identifiant du dossier
           name: id
@@ -1033,122 +1035,6 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /rest/dossiers/{id}/grilles/prix:
-    get:
-      summary: Liste les prix des grilles
-      description: |
-        Liste des prix calculés selon les impacts sur les différentes pièces selon les barèmes des différentes grilles
-      tags:
-        - Dossiers
-      parameters:
-        - description: |
-            Identifiant du dossier
-          name: id
-          in: path
-          required: true
-          type: integer
-
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
-      responses:
-        "200":
-          description: |
-            Grilles présentes
-          schema:
-            type: object
-            required:
-              - message
-              - response
-              - nb_resultats
-              - execute_time
-              - resultats
-            properties:
-              message:
-                type: string
-                description: Message sur le statut de la requête.
-              response:
-                type: string
-                description: Statut de la requete.
-              nb_resultats:
-                type: integer
-
-                description: Nombre de résultats de la requête
-              execute_time:
-                type: number
-                description: Temps de l'exécution de la requête
-              new_token:
-                type: string
-                description: Nouveau token à utiliser pour les prochains appels
-              resultats:
-                $ref: "#/definitions/ListePrixGrilles"
-          examples:
-            application/json:
-              response: OK
-              message: ""
-              nb_resultats: 3
-              execute_time: 0.00077
-              resultats:
-                - nom_grille: Dent Wizard
-                  montant: 2000.00
-                - nom_grille: Go Tech
-                  montant: 2600.30
-                - nom_grille: Grele Master
-                  montant: 1900.00
-
-        "400":
-          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
-          schema:
-             $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
-
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-        "404":
-          description: |
-            Aucun dossier trouvé pour cet identifiant.
-          schema:
-            $ref: "#/definitions/Returner"
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                La pièce n'existe pas.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-
   /rest/dossiers/{id}/proces_verbal:
     post:
       summary: Génére le procès verbal d'un dossier DSP
@@ -1274,6 +1160,7 @@ paths:
         Met à jour une pièce depuis son type id et son dossier id
       tags:
         - Pieces
+        - Dossiers
       parameters:
         - description: |
             Identifiant du dossier
@@ -1408,6 +1295,7 @@ paths:
         Supprime la pièce depuis son type id et son dossier id
       tags:
         - Pieces
+        - Dossiers
       parameters:
         - description: |
             Identifiant du dossier
