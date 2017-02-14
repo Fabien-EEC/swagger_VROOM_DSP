@@ -222,7 +222,6 @@ paths:
                 description: Statut de la requete.
               nb_resultats:
                 type: integer
-
                 description: Nombre de résultats de la requête.
               execute_time:
                 type: number
@@ -231,7 +230,7 @@ paths:
                 type: string
                 description: Nouveau token à utiliser pour les prochains appels.
               resultats:
-                $ref: '#/definitions/Dossier'
+                $ref: '#/definitions/ListeDossiers'
               current_page:
                 type: integer
                 description: |
@@ -254,35 +253,7 @@ paths:
                   immatriculation: DJ-925-AL
                   marque: Peugeot
                   modele: 206
-                  nombre_pieces: 2
-                  nombre_photos: 0
                   statut: 0
-                  afficher_btn_expertiser: false
-                  afficher_btn_proces_verbal: false
-                  photos: null
-                  pieces:
-                  - type_piece_id: 2
-                    aluminium: false
-                    peinture: true
-                    hors_sinistre: false
-                    type_reparation: 1
-                    impact:
-                      - taille: petit
-                        nombre: 3
-                      - taille: moyen
-                        nombre: 15
-                  - type_piece_id: 2
-                    aluminium: true
-                    peinture: true
-                    hors_sinistre: true
-                    type_reparation: 1
-                    impact:
-                      - taille: petit
-                        nombre: 3
-                      - taille: moyen
-                        nombre: 15
-                      - taille: gros
-                        nombre: 1
 
                 - dossier_id: 1122
                   internal_id: 2
@@ -290,35 +261,7 @@ paths:
                   immatriculation: AP-832-DD
                   marque: Citroen
                   modele: C4
-                  nombre_pieces: 1
-                  nombre_photos: 5
                   statut: 1
-                  afficher_btn_expertiser: false
-                  afficher_btn_proces_verbal: false
-                  photos:
-                    - photo_id: 12
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170012/20170012-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 13
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170013/20170013-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 14
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170014/20170014-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 15
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170015/20170015-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 16
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170016/20170016-01-19_20-10-59_AUTRE.pdf
-                  pieces:
-                    - type_piece_id: 3
-                      aluminium: true
-                      peinture: true
-                      hors_sinistre: true
-                      type_reparation: 1
-                      impact:
-                        - taille: petit
-                          nombre: 3
-                        - taille: moyen
-                          nombre: 15
-                        - taille: gros
-                          nombre: 1
               current_page: 1
               limit: 15
         "400":
@@ -1775,7 +1718,7 @@ paths:
           description: |
             Liste de dossiers
           schema:
-            $ref: '#/definitions/Dossier'
+            $ref: '#/definitions/ListeDossiers'
           examples:
             application/json:
               response: OK
@@ -1964,6 +1907,56 @@ definitions:
           $ref: "#/definitions/Impact"
 
   Dossier:
+    type: object
+    required:
+      - dossier_id
+      - nom_prenom
+      - immatriculation
+      - marque
+      - modele
+      - nombre_pieces
+      - nombre_photos
+      - statut
+      - afficher_btn_expertiser
+      - afficher_btn_proces_verbal
+    properties:
+      dossier_id:
+        type: integer
+        description: Identifiant du dossier
+      nom_prenom:
+        type: string
+        description: Nom et prénom de l'assuré
+      immatriculation:
+        type: string
+        description: Immatriculation du véhicule
+      marque:
+        type: string
+        description: Marque du véhicule à expertiser
+      modele:
+        type: string
+        description: Modèle du véhicule à expertiser
+      nombre_pieces:
+        type:  integer
+        description: Nombre de pièces endommagées sur ce véhicule
+      nombre_photos:
+        type: integer
+        description: Nombre de photo du dossier pour la grêle
+      montant:
+        type: number
+        description: Montant des réparations défini
+      statut:
+        type: integer
+        description: Statut du dossier, permet de choisir l'icone correspondant au statut
+      afficher_btn_expertiser:
+        type: boolean
+        description: |
+          Défini si le bouton "Expertiser le véhicule" est affichable.
+      afficher_btn_proces_verbal:
+        type: boolean
+        description: |
+          Défini si le bouton "Etablir le procès verbal" est affichable.
+
+  ListeDossiers:
     type: object
     required:
       - dossier_id
