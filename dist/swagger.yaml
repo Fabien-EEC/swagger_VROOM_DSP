@@ -542,6 +542,10 @@ paths:
               resultats: 0
 
     post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
       summary: Créé une pièce
       description: |
         Soumet la création d'une nouvelle pièce pour ce dossier.
@@ -670,6 +674,18 @@ paths:
               response: FAIL
               message: |
                 La pièce *Capot* existe déjà pour ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "500":
+          description: Une erreur lors de la persistance s'est produite.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Une erreur s'est produite.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
