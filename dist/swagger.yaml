@@ -1704,6 +1704,18 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
+        "500":
+          description: Une erreur lors de la suppression de l'impact.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Une erreur s'est produite.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
 
   /rest/cabinets/dossiers/{critere}:
     get:
