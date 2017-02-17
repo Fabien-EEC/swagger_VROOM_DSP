@@ -1199,7 +1199,7 @@ paths:
 
         - description: |
             Formulaire de mise à jour d'une pièce
-          name: body
+          name: piece
           in: body
           required: true
           schema:
@@ -1426,6 +1426,18 @@ paths:
               response: FAIL
               message: |
                 La pièce n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "500":
+          description: Une erreur lors de la suppression de la pièce.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Une erreur s'est produite.
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
