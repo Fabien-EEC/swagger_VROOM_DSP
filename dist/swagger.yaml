@@ -1474,12 +1474,11 @@ paths:
           type: string
 
         - description: |
-            Formulaire de mise à jour de l'impact
-          name: body
-          in: body
+            Nombre d'impact à changer
+          name: impact
+          in: query
           required: true
-          schema:
-            $ref: "#/definitions/Impact"
+          type: integer
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
