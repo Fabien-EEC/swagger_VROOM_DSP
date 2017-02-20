@@ -1061,11 +1061,17 @@ paths:
         Génération d'un procès verbal d'expertise d'un dossier DSP depuis un identifiant de dossier et de différentes informations.
       tags:
         - Dossiers
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
       parameters:
         - name: id
           in: path
           type: integer
           required: true
+          description: |
+            Identifiant unique du dossier.
 
         - name: temps_redressage_1
           type: number
@@ -1115,6 +1121,13 @@ paths:
           type: file
           description: |
             Signature du réparateur pour certifié que c'est bien lui qui va réparer pour ce montant
+
+        - name: commentaire
+          in: formData
+          required: false
+          type: string
+          description: |
+            Commentaire sur le dossier en question.
 
         - $ref: '#/parameters/token'
         - $ref: '#/parameters/login'
