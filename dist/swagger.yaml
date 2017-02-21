@@ -1184,6 +1184,19 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
+        "404":
+          description: |
+            Le dossier indiqué n'existe pas.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Le dossier n'existe pas.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
 
   /rest/dossiers/{dossier_id}/pieces/{type_piece_id}:
     put:
@@ -1901,6 +1914,115 @@ paths:
               execute_time: 0.00087
               resultats: null
 
+  /rest/dossiers/{id}/vehicule:
+    get:
+      summary: Récupère le véhicule du dossier
+      description: |
+        Retourne le véhicule affecté au dossier avant d'établir le procès verbal.
+      tags:
+        - Dossiers
+        - Vehicules
+      parameters:
+
+        - name: id
+          in: path
+          description: Identifiant unique du dossier
+          required: true
+          type: integer
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+
+      responses:
+        "200":
+          description: |
+            Véhicule retourné avec succès.
+          schema:
+            type: object
+            title: Returner
+            required:
+              - message
+              - response
+              - nb_resultats
+              - execute_time
+              - resultats
+            properties:
+              message:
+                type: string
+                description: Message sur le statut de la requête.
+              response:
+                type: string
+                description: Statut de la requete.
+              nb_resultats:
+                type: integer
+                description: Nombre de résultats de la requête
+              execute_time:
+                type: number
+                description: Temps de l'exécution de la requête
+              new_token:
+                type: string
+                description: Nouveau token à utiliser pour les prochains appels
+              resultats:
+                $ref: "#/definitions/Vehicule"
+          examples:
+            application/json:
+              response: OK
+              message: ""
+              nb_resultats: 1
+              execute_time: 0.00087
+              resultats:
+                vin: VF7GJRHYK93027653
+                immatriculation: DA-939-JO
+                modele: Velsatis
+                constructeur: Renault
+                genre: VP
+                kilometrage: 181645
+                code_energie: GO,
+                code_carrosserie: CI 5
+                annee_modele: 2006
+                couleur: bleu
+                puissance_fiscale: 9
+                date_achat: '2006-05-06 00:00:00'
+                date_immatriculation: '2006-07-07 00:00:00'
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "403":
+          description: |
+            Vous n'avez pas de droit d'accéder à ce dossiers.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de consulter le véhicule de ce dossier.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Le dossier n'existe pas.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Aucun dossier avec cet identifiant trouvé pour ce cabinet.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+
 # Liste des paramètres fréquents
 parameters:
 
@@ -1930,6 +2052,93 @@ parameters:
 
 # Liste des définitions des modèles
 definitions:
+  Vehicule:
+    type: object
+    required:
+      - vin
+      - immatriculation
+      - modele
+      - constructeur
+      - genre
+      - kilometrage
+      - code_energie
+      - code_carrosseri
+      - annee_modele
+      - couleur
+      - puissance_fiscale
+      - date_achat
+      - date_immatriculation
+    properties:
+      vin:
+        type: string
+        description: |
+          Identifiant unique du véhicule
+      immatriculation:
+        type: string
+        description: |
+          Immatriculation du véhicule
+      modele:
+        type: string
+        description: |
+          Modèle du véhicule (C4, 206, Touran, ...)
+      constructeur:
+        type: string
+        description: |
+          Constructeur du véhicule (Renault, Peugeot, ...)
+      genre:
+        type: string
+        description: |
+          Genre du véhicule (Véhicule Professionnel, REM, ...)
+      kilometrage:
+        type: string
+        description: |
+          Valeur au compteur.
+      code_energie:
+        type: string
+        description: |
+          Type de carburant utilisé (GO, ES)
+      code_carrosserie:
+        type: string
+        description: |
+          Type du véhicule défini par un code
+      annee_modele:
+        type: integer
+        description: |
+          Année du modèle du véhicule
+      couleur:
+        type: string
+        description: |
+          Couleur du véhicule
+      puissance_fiscale:
+        type: integer
+        description: |
+          Puissance fiscale du véhicule
+      date_achat:
+        type: string
+        format: date
+        description: |
+          Date de l'achat du véhicule
+      date_immatriculation:
+        type: string
+        description: |
+          Date de l'immatriculation du véhicule
+      usure_pneu_AVD:
+        type: string
+        description: |
+          Usure du pneu à l'avant côté droit
+      usure_pneu_AVG:
+        type: string
+        description: |
+          Usure du pneu à l'avant côté gauche
+      usure_pneu_ARD:
+        type: string
+        description: |
+          Usure du pneu à l'arrière côté droit
+      usure_pneu_ARG:
+        type: string
+        description: |
+          Usure du pneu à l'arrière côté gauche
+
   AddOrUpdatePiece:
     type: object
     required:
