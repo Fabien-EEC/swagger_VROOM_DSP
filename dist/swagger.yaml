@@ -44,11 +44,6 @@ paths:
               - L'_identifiant_ de l'expert et son _login_.
               - Les _grilles tarifaires_ des pièces endommagées par la grêle.
               - Le _token_ à passer dans chacun des appels suivant.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
-
           schema:
             title: RetourLogin
             type: object
@@ -205,11 +200,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Liste des dossiers du jour.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Liste des dossiers du jour.
           schema:
             type: object
             required:
@@ -282,17 +273,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: "Vous devez vous connecter pour naviguer sur l'application."
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: 0
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: Dossiers interdits pour cet utilisateur.
           schema:
@@ -338,11 +329,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Dossier récupéré depuis sont identifiant.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Dossier récupéré depuis sont identifiant.
           schema:
             type: object
             required:
@@ -397,17 +384,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: "Vous devez vous connecter pour naviguer sur l'application."
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: 0
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: Dossier interdit pour cet utilisateur.
           schema:
@@ -454,11 +441,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Liste des pièces endommagées du dossier déjà ajoutées ou liste vide si le dossier ne contient aucune pièce.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Liste des pièces endommagées du dossier déjà ajoutées ou liste vide si le dossier ne contient aucune pièce.
           schema:
             type: object
             required:
@@ -527,17 +510,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: "Vous devez vous connecter pour naviguer sur l'application."
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: 0
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: Dossier interdit pour cet utilisateur.
           schema:
@@ -594,7 +577,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - La pièce est retournée après la création.
+            La pièce est retournée après la création.
           schema:
             type: object
             required:
@@ -650,18 +633,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -735,11 +717,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Tableau des photos du dossier
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Tableau des photos du dossier
           schema:
             required:
               - message
@@ -790,19 +768,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -863,8 +839,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Présentation des données envoyées.
-
+            Présentation des données envoyées.
           schema:
             type: object
             required:
@@ -913,19 +888,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Dossier interdit pour cet utilisateur.
@@ -998,11 +971,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - La pièce a été supprimé avec succès.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            La pièce a été supprimé avec succès.
           schema:
             type: object
             required:
@@ -1051,19 +1020,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Vous n'avez pas de droit de supprimer cette photo.
@@ -1174,8 +1141,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Message de succès suite à la génération du procès verbal d'expertise.
-
+            Message de succès suite à la génération du procès verbal d'expertise.
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -1197,19 +1163,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
         "403":
           description: |
@@ -1279,11 +1243,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Succès de la mise à jour de la pièce.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Succès de la mise à jour de la pièce.
           schema:
             type: object
             required:
@@ -1340,19 +1300,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
         "403":
           description: |
@@ -1412,11 +1370,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - La pièce a été supprimé avec succès.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            La pièce a été supprimé avec succès.
           schema:
             type: object
             required:
@@ -1466,20 +1420,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
         "403":
           description: |
@@ -1566,11 +1517,7 @@ paths:
           description: |
             Succès de la mise à jour:
             -------------------------
-            - L'impact à bien été mis à jour et est retourné dans la réponse.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            L'impact à bien été mis à jour et est retourné dans la réponse.
           schema:
             type: object
             required:
@@ -1618,19 +1565,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
-#        "401":
-#          description: Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
         "403":
           description: |
@@ -1696,11 +1641,7 @@ paths:
           description: |
             Succès de la suppression:
             -------------------------
-            - L'impact a été supprimé avec succès
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            L'impact a été supprimé avec succès
           schema:
             type: object
             required:
@@ -1749,20 +1690,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
 
         "403":
           description: |
@@ -1838,17 +1776,12 @@ paths:
           required: false
           type: integer
           minimum: 0
-
       responses:
         "200":
           description: |
             Succès de la requete:
             ---------------------
-            - Liste de dossiers
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Liste de dossiers
           schema:
             $ref: '#/definitions/ListeDossiers'
           examples:
@@ -1941,19 +1874,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
-#        "401":
-#          description: |
-#            Votre token est invalide.
-#          schema:
-#            $ref: '#/definitions/Returner'
-#          examples:
-#            application/json:
-#              response: FAIL
-#              message: |
-#                Votre token est invalide.
-#              nb_resultats: 0
-#              execute_time: 0.00087
-#              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Vous n'avez pas de droit d'accéder à ces dossiers.
@@ -2006,11 +1937,7 @@ paths:
           description: |
             Succès de la requete:
             ---------------------
-            - Véhicule retourné avec succès.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Véhicule retourné avec succès.
           schema:
             type: object
             title: Returner
@@ -2069,6 +1996,17 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Vous n'avez pas de droit d'accéder à ce dossiers.
@@ -2120,18 +2058,14 @@ paths:
           description: Les informations du véhicule
           required: true
           schema:
-            $ref: '#/definitions/Vehicule'
+            $ref: '#/definitions/UpdateVehicule'
 
       responses:
         "200":
           description: |
             Succès de la requete:
             ---------------------
-            - Véhicule modifié avec succès.
-
-            Echec de l'authentification:
-            ----------------------------
-            - Les informations fournies ne permettent pas une authentification valide.
+            Véhicule modifié avec succès.
           schema:
             type: object
             title: Returner
@@ -2190,6 +2124,18 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: null
+
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
         "403":
           description: |
             Vous n'avez pas de droit d'accéder à ce dossiers.
@@ -2262,6 +2208,91 @@ definitions:
       - puissance_fiscale
       - date_achat
       - date_immatriculation
+    properties:
+      vin:
+        type: string
+        description: |
+          Identifiant unique du véhicule
+      immatriculation:
+        type: string
+        description: |
+          Immatriculation du véhicule
+      modele:
+        type: string
+        description: |
+          Modèle du véhicule (C4, 206, Touran, ...)
+      constructeur:
+        type: string
+        description: |
+          Constructeur du véhicule (Renault, Peugeot, ...)
+      genre:
+        type: string
+        description: |
+          Genre du véhicule (VP, CTTE, VASP)
+        default: VP
+      kilometrage:
+        type: string
+        description: |
+          Valeur au compteur.
+      code_energie:
+        type: string
+        default: GO
+        description: |
+          Type de carburant utilisé (ES, GO, ELEC, GPL, EH)
+      code_carrosserie:
+        type: string
+        default: CI 5
+        description: |
+          Type du véhicule défini par un code (CI 3, CI 5, break)
+      annee_modele:
+        type: integer
+        default: 2017
+        description: |
+          Année du modèle du véhicule
+      couleur:
+        type: string
+        default: grise
+        description: |
+          Couleur du véhicule
+      puissance_fiscale:
+        type: integer
+        default: 9
+        description: |
+          Puissance fiscale du véhicule
+      date_achat:
+        type: string
+        format: date
+        description: |
+          Date de l'achat du véhicule
+      date_immatriculation:
+        type: string
+        format: date
+        description: |
+          Date de l'immatriculation du véhicule
+      usure_pneu_AVD:
+        type: string
+        description: |
+          Usure du pneu à l'avant côté droit
+      usure_pneu_AVG:
+        type: string
+        description: |
+          Usure du pneu à l'avant côté gauche
+      usure_pneu_ARD:
+        type: string
+        description: |
+          Usure du pneu à l'arrière côté droit
+      usure_pneu_ARG:
+        type: string
+        description: |
+          Usure du pneu à l'arrière côté gauche
+  UpdateVehicule:
+    type: object
+    required:
+      - kilometrage
+      - usure_pneu_AVD
+      - usure_pneu_AVG
+      - usure_pneu_ARD
+      - usure_pneu_ARG
     properties:
       vin:
         type: string
