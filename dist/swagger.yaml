@@ -37,7 +37,7 @@ paths:
         "200":
           description: |
             Succès de l'authentification:
-            =============================
+            -----------------------------
             Les données retournées sont **nécessaire au mode hors connexion**, ces données sont les suivantes :
               - La _liste des pièces disponible_ en vue de remplir la liste des pièces à choisir.
               - les _3 types de réparations disponible_ pour les boutons dans les pièces.
@@ -46,8 +46,8 @@ paths:
               - Le _token_ à passer dans chacun des appels suivant.
 
             Echec de l'authentification:
-            =============================
-            Les informations fournies ne permettent une authentification valide.
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
 
           schema:
             title: RetourLogin
@@ -202,7 +202,14 @@ paths:
           minimum: 0
       responses:
         "200":
-          description: Dossiers du jour
+          description: |
+            Succès de la requete:
+            ---------------------
+            - Liste des dossiers du jour.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -328,7 +335,14 @@ paths:
         - $ref: '#/parameters/dsp'
       responses:
         "200":
-          description: Dossier récupéré depuis sont identifiant
+          description: |
+            Succès de la requete:
+            ---------------------
+            - Dossier récupéré depuis sont identifiant.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -438,7 +452,13 @@ paths:
       responses:
         "200":
           description: |
-            Liste des pièces endommagées du dossier déjà ajoutées ou liste vide si le dossier ne contient aucune pièce.
+            Succès de la requete:
+            ---------------------
+            - Liste des pièces endommagées du dossier déjà ajoutées ou liste vide si le dossier ne contient aucune pièce.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -572,7 +592,9 @@ paths:
       responses:
         "201":
           description: |
-            Succès de la création de la pièce.
+            Succès de la requete:
+            ---------------------
+            - La pièce est retournée après la création.
           schema:
             type: object
             required:
@@ -711,7 +733,13 @@ paths:
       responses:
         "200":
           description: |
-            Tableau des photos du dossier
+            Succès de la requete:
+            ---------------------
+            - Tableau des photos du dossier
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             required:
               - message
@@ -833,7 +861,10 @@ paths:
       responses:
         "201":
           description: |
-            Ajout d'une ou plusieurs photos au dossier.
+            Succès de la requete:
+            ---------------------
+            - Présentation des données envoyées.
+
           schema:
             type: object
             required:
@@ -965,7 +996,13 @@ paths:
       responses:
         "200":
           description: |
-            La pièce a été supprimé avec succès.
+            Succès de la requete:
+            ---------------------
+            - La pièce a été supprimé avec succès.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -1135,7 +1172,10 @@ paths:
       responses:
         "201":
           description: |
-            Succès de la génération du procès verbal
+            Succès de la requete:
+            ---------------------
+            - Message de succès suite à la génération du procès verbal d'expertise.
+
           schema:
             $ref: '#/definitions/Returner'
           examples:
@@ -1237,7 +1277,13 @@ paths:
       responses:
         "200":
           description: |
-            Succès de la mise à jour de la pièce.
+            Succès de la requete:
+            ---------------------
+            - Succès de la mise à jour de la pièce.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -1364,7 +1410,13 @@ paths:
       responses:
         "200":
           description: |
-            La pièce a été supprimé avec succès.
+            Succès de la requete:
+            ---------------------
+            - La pièce a été supprimé avec succès.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -1512,9 +1564,13 @@ paths:
       responses:
         "200":
           description: |
-            Succès de la mise à jour
-            ========================
-            L'impact à bien été mis à jour et est retourné dans la réponse.
+            Succès de la mise à jour:
+            -------------------------
+            - L'impact à bien été mis à jour et est retourné dans la réponse.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -1638,8 +1694,13 @@ paths:
       responses:
         "200":
           description: |
-            L'impact a été supprimé avec succès
-            ===================================
+            Succès de la suppression:
+            -------------------------
+            - L'impact a été supprimé avec succès
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             required:
@@ -1781,7 +1842,13 @@ paths:
       responses:
         "200":
           description: |
-            Liste de dossiers
+            Succès de la requete:
+            ---------------------
+            - Liste de dossiers
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             $ref: '#/definitions/ListeDossiers'
           examples:
@@ -1937,7 +2004,13 @@ paths:
       responses:
         "200":
           description: |
-            Véhicule retourné avec succès.
+            Succès de la requete:
+            ---------------------
+            - Véhicule retourné avec succès.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             title: Returner
@@ -2052,7 +2125,13 @@ paths:
       responses:
         "200":
           description: |
-            Véhicule modifié avec succès.
+            Succès de la requete:
+            ---------------------
+            - Véhicule modifié avec succès.
+
+            Echec de l'authentification:
+            ----------------------------
+            - Les informations fournies ne permettent pas une authentification valide.
           schema:
             type: object
             title: Returner
