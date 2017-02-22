@@ -2023,7 +2023,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-    post:
+    put:
       summary: Met à jour le véhicule du dossier
       description: |
         Met à jour le véhicule affecté au dossier avant d'établir le procès verbal.
