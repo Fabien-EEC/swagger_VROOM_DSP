@@ -6,6 +6,10 @@ info:
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
 host: localhost
 basePath: /api
+#tags:
+#  - name: Dossiers
+#    description: |
+#      toutes les routes
 produces:
   - "application/json"
 paths:
@@ -2189,6 +2193,7 @@ parameters:
     description: |
       Défini si l'application appelante est l'appli VROOM DSP
     required: false
+    default: true
     type: boolean
 
 # Liste des définitions des modèles
@@ -2454,64 +2459,37 @@ definitions:
     type: object
     required:
       - dossier_id
+      - internal_id
       - nom_prenom
-      - nombre_photos
-      - statut
-      - afficher_btn_expertiser
-      - afficher_btn_proces_verbal
       - immatriculation
       - marque
       - modele
-      - nombre_pieces
-      - photos
-      - pieces
+      - statut
     properties:
       dossier_id:
         type: integer
-        description: Identifiant du dossier
+        description: |
+          Identifiant du dossier qui ne doit jamais apparaitre. Le dossier n'est pas connu par cet identifiant,
+          il sert uniquement pour communiquer avec l'api.
+      internal_id:
+        type: integer
+        description: |
+          Identifiant du dossier interne au cabinet. Cet identifiant, doit être celui qui est affiché.
       nom_prenom:
         type: string
-        description: Nom et prénom de l'assuré
+        description: Nom et prénom de l'assuré.
       immatriculation:
         type: string
-        description: Immatriculation du véhicule
+        description: Immatriculation du véhicule.
       marque:
         type: string
-        description: Marque du véhicule à expertiser
+        description: Marque du véhicule à expertiser.
       modele:
         type: string
-        description: Modèle du véhicule à expertiser
-      nombre_pieces:
-        type:  integer
-        description: Nombre de pièces endommagées sur ce véhicule
-      nombre_photos:
-        type: integer
-        description: Nombre de photo du dossier pour la grêle
-      date_rapport:
-        type: string
-        description: Date du rapport
-      montant:
-        type: number
-        description: Montant des réparations défini
+        description: Modèle du véhicule à expertiser.
       statut:
         type: integer
-        description: Statut du dossier, permet de choisir l'icone correspondant au statut
-      afficher_btn_expertiser:
-        type: boolean
-        description: |
-          Défini si le bouton "Expertiser le véhicule" est affichable.
-      afficher_btn_proces_verbal:
-        type: boolean
-        description: |
-          Défini si le bouton "Etablir le procès verbal" est affichable.
-      photos:
-        type: array
-        items:
-          $ref: '#/definitions/Photo'
-      pieces:
-        type: array
-        items:
-          $ref: '#/definitions/Piece'
+        description: Statut du dossier, permet de choisir l'icone correspondant au statut.
 
   Piece:
     type: object
