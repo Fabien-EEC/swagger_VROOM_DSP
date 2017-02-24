@@ -496,22 +496,22 @@ paths:
               nb_resultats: 1
               execute_time: 0.00087
               resultats:
-                - type_piece_id: 2
-                  aluminium: false
-                  peinture: true
-                  hors_sinistre: false
-                  type_reparation: 1
-                  impact:
+                - id_type_piece: 2
+                  aluminium: 0
+                  peinture: 1
+                  hors_sinistre: 0
+                  id_type_reparation: 1
+                  impacts:
                     - taille: petit
                       nombre: 3
                     - taille: moyen
                       nombre: 15
-                - type_piece_id: 2
-                  aluminium: true
-                  peinture: true
-                  hors_sinistre: true
-                  type_reparation: 1
-                  impact:
+                - id_type_piece: 2
+                  aluminium: 1
+                  peinture: 1
+                  hors_sinistre: 1
+                  id_type_reparation: 1
+                  impacts:
                     - taille: petit
                       nombre: 3
                     - taille: moyen
@@ -631,12 +631,12 @@ paths:
               nb_resultats: 1
               execute_time: 0.00087
               resultats:
-                type_piece_id: 1
-                aluminium: false
-                peinture: true
-                hors_sinistre: false
-                type_reparation: 3
-                impact:
+                id_type_piece: 1
+                aluminium: 0
+                peinture: 1
+                hors_sinistre: 0
+                id_type_reparation: 3
+                impacts:
                   - taille: petit
                     nombre: 3
                   - taille: moyen
@@ -1222,7 +1222,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /rest/dossiers/{dossier_id}/pieces/{type_piece_id}:
+  /rest/dossiers/{dossier_id}/pieces/{id_type_piece}:
     put:
       summary: Met à jour une pièce
       description: |
@@ -1241,7 +1241,7 @@ paths:
 
         - description: |
             Identifiant du type d'une pièce, unique par
-          name: type_piece_id
+          name: id_type_piece
           in: path
           required: true
           type: integer
@@ -1299,12 +1299,12 @@ paths:
               nb_resultats: 1
               execute_time: 0.00077
               resultats:
-                type_piece_id: 1
-                aluminium: false
-                peinture: true
-                hors_sinistre: false
-                type_reparation: 1
-                impact:
+                id_type_piece: 1
+                aluminium: 0
+                peinture: 0
+                hors_sinistre: 0
+                id_type_reparation: 1
+                impacts:
                   - taille: petit
                     nombre: 3
                   - taille: moyen
@@ -1376,7 +1376,7 @@ paths:
 
         - description: |
             Identifiant du type d'une pièce, unique par dossier
-          name: type_piece_id
+          name: id_type_piece
           in: path
           required: true
           type: integer
@@ -1490,7 +1490,7 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /rest/dossiers/{dossier_id}/pieces/{type_piece_id}/impacts/{taille}:
+  /rest/dossiers/{dossier_id}/pieces/{id_type_piece}/impacts/{taille}:
     put:
       summary: Met à jour un impact d'une pièce
       description: |
@@ -1508,7 +1508,7 @@ paths:
 
         - description: |
             Identifiant du type d'une pièce, unique par dossier
-          name: type_piece_id
+          name: id_type_piece
           in: path
           required: true
           type: integer
@@ -1522,7 +1522,7 @@ paths:
 
         - description: |
             Nombre d'impact à changer
-          name: impact
+          name: nombre
           in: query
           required: true
           type: integer
@@ -1562,7 +1562,7 @@ paths:
                 type: string
                 description: Nouveau token à utiliser pour les prochains appels.
               resultats:
-                $ref: '#/definitions/Impact'
+                $ref: '#/definitions/Impacts'
           examples:
             application/json:
               response: OK
@@ -1638,7 +1638,7 @@ paths:
 
         - description: |
             Identifiant du type d'une pièce, unique par dossier
-          name: type_piece_id
+          name: id_type_piece
           in: path
           required: true
           type: integer
@@ -1820,22 +1820,22 @@ paths:
                   afficher_btn_proces_verbal: false
                   photos: null
                   pieces:
-                  - type_piece_id: 2
-                    aluminium: false
-                    peinture: true
-                    hors_sinistre: false
-                    type_reparation: 1
-                    impact:
+                  - id_type_piece: 2
+                    aluminium: 0
+                    peinture: 1
+                    hors_sinistre: 0
+                    id_type_reparation: 1
+                    impacts:
                       - taille: petit
                         nombre: 3
                       - taille: moyen
                         nombre: 15
-                  - type_piece_id: 2
-                    aluminium: true
-                    peinture: true
-                    hors_sinistre: true
-                    type_reparation: 1
-                    impact:
+                  - id_type_piece: 2
+                    aluminium: 1
+                    peinture: 1
+                    hors_sinistre: 1
+                    id_type_reparation: 1
+                    impacts:
                       - taille: petit
                         nombre: 3
                       - taille: moyen
@@ -1866,12 +1866,12 @@ paths:
                     - photo_id: 16
                       url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170016/20170016-01-19_20-10-59_AUTRE.pdf
                   pieces:
-                    - type_piece_id: 3
-                      aluminium: true
-                      peinture: true
-                      hors_sinistre: true
-                      type_reparation: 1
-                      impact:
+                    - id_type_piece: 3
+                      aluminium: 1
+                      peinture: 1
+                      hors_sinistre: 1
+                      id_type_reparation: 1
+                      impacts:
                         - taille: petit
                           nombre: 3
                         - taille: moyen
@@ -2391,30 +2391,30 @@ definitions:
   AddOrUpdatePiece:
     type: object
     required:
-      - type_piece_id
-      - impact
-      - type_reparation
+      - id_type_piece
+      - impacts
+      - id_type_reparation
     properties:
-      type_piece_id:
+      id_type_piece:
         type: integer
         description: |
           Identifiant du type de la pièce unique par dossier
       aluminium:
-        type: boolean
+        type: integer
         description: La pièce est-elle en aluminium ?
       peinture:
-        type: boolean
+        type: integer
         description: La pièce doit-elle être peinte ?
       hors_sinistre:
-        type: boolean
+        type: integer
         description: La pièce a-t-elle été endommagé avant le sinistre ?
-      type_reparation:
+      id_type_reparation:
         type: integer
         description: Identifiant du type de réparation à faire.
-      impact:
+      impacts:
         type: array
         items:
-          $ref: "#/definitions/Impact"
+          $ref: "#/definitions/Impacts"
   Dossier:
     type: object
     required:
@@ -2463,7 +2463,7 @@ definitions:
         type: integer
         description: Statut du dossier, permet de choisir l'icone correspondant au statut
       afficher_btn_ajouter_photos:
-        type: boolean
+        type: integer
         description: |
           Défini si le bouton "Ajouter des photos" doit être affiché.
       afficher_btn_expertiser:
@@ -2514,44 +2514,44 @@ definitions:
   Piece:
     type: object
     required:
-      - type_piece_id
-      - impact
-      - type_reparation
+      - id_type_piece
+      - impacts
+      - id_type_reparation
       - aluminium
       - peinture
       - hors_sinistre
     properties:
-      type_piece_id:
+      id_type_piece:
         type: integer
         description: |
           Identifiant du type de la pièce unique par dossier, le libellé de la pièce peut être obtenu avec
           le tableau associatif renvoyé par l'appel à GET /dossiers/{id}/pieces.
       aluminium:
-        type: boolean
+        type: integer
         description: La pièce est-elle en aluminium ?
       peinture:
-        type: boolean
+        type: integer
         description: La pièce doit-elle être peinte ?
       hors_sinistre:
-        type: boolean
+        type: integer
         description: La pièce a-t-elle été endommagé avant le sinistre ?
-      type_reparation:
+      id_type_reparation:
         type: integer
 
         description: |
           Identifiant du type de réparation à faire, tableau associatif fourni lors du GET /dossiers/{id}/pieces.
-      impact:
+      impacts:
         type: array
         items:
-          $ref: "#/definitions/Impact"
+          $ref: "#/definitions/Impacts"
 
   TypeReparation:
     type: object
     required:
-      - type_reparation_id
+      - id_type_reparation
       - libelle
     properties:
-      type_reparation_id:
+      id_type_reparation:
         type: integer
         description: |
           Identifiant du type de réparation
@@ -2585,7 +2585,7 @@ definitions:
         description: |
           Libellé du type de la pièce
 
-  Impact:
+  Impacts:
     type: object
     required:
       - taille
