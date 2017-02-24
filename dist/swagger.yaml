@@ -6,10 +6,21 @@ info:
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
 host: localhost
 basePath: /api
-#tags:
-#  - name: Dossiers
-#    description: |
-#      toutes les routes
+tags:
+  - name: Connexion
+  - name: Dossiers
+  - name: Identifier
+    description: |
+      Identifier le véhicule
+  - name: Photos
+    description: |
+      Ajouter des photos
+  - name: Expertiser
+    description: |
+      Expertiser le véhicule
+  - name: PV
+    description: |
+      Etablir le procès verbal
 produces:
   - "application/json"
 paths:
@@ -19,7 +30,8 @@ paths:
       description: |
         Première connexion en vue d'obtenir un token qui sera transmis à chaque appel et des données pour le mode hors connexion
       tags:
-        - Authentification
+        - Connexion
+        - Tous
       parameters:
         - name: login
           in: formData
@@ -167,6 +179,7 @@ paths:
         le tout trié par statut et par date d'expertise.
       tags:
         - Dossiers
+        - Tous
       parameters:
         - name: id
           in: path
@@ -319,6 +332,7 @@ paths:
         Retourne le dossier depuis son identifiant
       tags:
         - Dossiers
+        - Tous
       parameters:
         - name: id
           in: path
@@ -429,8 +443,8 @@ paths:
       description: |
         Retourne les pièces endommagées du dossier depuis l'identifiant de celui-ci.
       tags:
-        - Pieces
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - name: id
           in: path
@@ -558,8 +572,8 @@ paths:
       description: |
         Soumet la création d'une nouvelle pièce pour ce dossier.
       tags:
-        - Pieces
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - description: Identifiant du dossier
           name: id
@@ -705,8 +719,8 @@ paths:
       description: |
         Liste des photos du dossier depuis l'identifiant fourni, ou pas de liste si aucune photo n'a été trouvé pour le dossier.
       tags:
-        - Dossiers
         - Photos
+        - Tous
       parameters:
         - name: id
           in: path
@@ -818,7 +832,7 @@ paths:
         Les photos doivent être **au format JPG** pour qu'elles soient intégrées.
       tags:
         - Photos
-        - Dossiers
+        - Tous
       consumes:
         - multipart/form-data
       parameters:
@@ -951,7 +965,7 @@ paths:
         Supprime une photo depuis son identifiant et l'identifiant du dossier.
       tags:
         - Photos
-        - Dossiers
+        - Tous
       parameters:
         - description: |
             Identifiant du dossier.
@@ -1069,7 +1083,8 @@ paths:
       description: |
         Génération d'un procès verbal d'expertise d'un dossier DSP depuis un identifiant de dossier et de différentes informations.
       tags:
-        - Dossiers
+        - PV
+        - Tous
       consumes:
         - multipart/form-data
       produces:
@@ -1213,8 +1228,8 @@ paths:
       description: |
         Met à jour une pièce depuis son type id et son dossier id
       tags:
-        - Pieces
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - description: |
             Identifiant du dossier
@@ -1348,8 +1363,8 @@ paths:
       description: |
         Supprime la pièce depuis son type id et son dossier id
       tags:
-        - Pieces
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - description: |
             Identifiant du dossier
@@ -1436,7 +1451,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-
         "403":
           description: |
             Vous n'avez pas de droit de supprimer cette pièce.
@@ -1482,9 +1496,8 @@ paths:
       description: |
         Met à jour un impact d'une pièce depuis le type id de celle-ci, l'id du dossier et la taille de la pièce, unique par dossier
       tags:
-        - Pieces
-        - Impacts
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - description: |
             Identifiant du dossier
@@ -1613,9 +1626,8 @@ paths:
       description: |
         Supprime un impact d'une pièce depuis l'id de celle-ci, l'id du dossier et la taille de l'impact.
       tags:
-        - Pieces
-        - Impacts
-        - Dossiers
+        - Expertiser
+        - Tous
       parameters:
         - description: |
             Identifiant du dossier
@@ -1753,7 +1765,7 @@ paths:
         Liste des dossiers d'un cabinet depuis un critère. La recherche sera sur ce critère en testant en premier l'immatriculation / le numéro de dossier du cabinet (l'internal_id) et pour finir le Nom prénom de l'assuré.
       tags:
         - Dossiers
-        - Cabinets
+        - Tous
       parameters:
         - name: critere
           description: |
@@ -1923,8 +1935,8 @@ paths:
       description: |
         Retourne le véhicule affecté au dossier avant d'établir le procès verbal.
       tags:
-        - Dossiers
-        - Vehicules
+        - Tous
+        - Identifier
       parameters:
 
         - name: id
@@ -2044,8 +2056,8 @@ paths:
       description: |
         Met à jour le véhicule affecté au dossier avant d'établir le procès verbal.
       tags:
-        - Dossiers
-        - Vehicules
+        - Tous
+        - Identifier
       parameters:
 
         - name: id
@@ -2376,7 +2388,6 @@ definitions:
         type: string
         description: |
           Usure du pneu à l'arrière côté gauche
-
   AddOrUpdatePiece:
     type: object
     required:
@@ -2404,7 +2415,6 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Impact"
-
   Dossier:
     type: object
     required:
@@ -2416,6 +2426,7 @@ definitions:
       - nombre_pieces
       - nombre_photos
       - statut
+      - afficher_btn_ajouter_photos
       - afficher_btn_expertiser
       - afficher_btn_proces_verbal
     properties:
@@ -2443,17 +2454,26 @@ definitions:
       montant:
         type: number
         description: Montant des réparations défini
+      date_rapport:
+        type: string
+        format: date-time
+        description: |
+          Date de la génération du rapport d'expertise, le dossier devient clos.
       statut:
         type: integer
         description: Statut du dossier, permet de choisir l'icone correspondant au statut
+      afficher_btn_ajouter_photos:
+        type: boolean
+        description: |
+          Défini si le bouton "Ajouter des photos" doit être affiché.
       afficher_btn_expertiser:
         type: boolean
         description: |
-          Défini si le bouton "Expertiser le véhicule" est affichable.
+          Défini si le bouton "Expertiser le véhicule" doit être affiché.
       afficher_btn_proces_verbal:
         type: boolean
         description: |
-          Défini si le bouton "Etablir le procès verbal" est affichable.
+          Défini si le bouton "Etablir le procès verbal" doit être affiché.
 
   ListeDossiers:
     type: object
