@@ -388,10 +388,13 @@ paths:
                 marque: Peugeot
                 modele: 206
                 nombre_pieces: 2
-                nombre_photos: 0
+                nombre_photos: 5
                 statut: 1
-                afficher_btn_expertiser: false
-                afficher_btn_proces_verbal: false
+                date_rapport: "2017-02-22 12:30:00"
+                montant: 1500.12
+                afficher_btn_ajouter_photos: true
+                afficher_btn_expertiser: true
+                afficher_btn_proces_verbal: true
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
