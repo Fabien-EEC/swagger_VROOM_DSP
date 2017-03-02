@@ -90,13 +90,13 @@ paths:
                 title: ResultatRequete
                 type: object
                 required:
-                  - pieces_disponible
+                  - pieces_disponibles
                   - type_reparation
                   - expert
                   - grilles_tarifaires
                   - nb_impacts_max
                 properties:
-                  pieces_disponible:
+                  pieces_disponibles:
                     $ref: "#/definitions/ListePieceDisponible"
                   type_reparation:
                     $ref: "#/definitions/ListeTypeReparationDisponible"
@@ -115,7 +115,7 @@ paths:
               nb_resultats: 2
               execute_time: 0.00087
               resultats:
-                pieces_disponible:
+                pieces_disponibles:
                   - id: 1
                     libelle: Capot
                   - id: 2
@@ -2512,8 +2512,9 @@ definitions:
         description: Modèle du véhicule à expertiser.
       statut:
         type: integer
-        description: Statut du dossier, permet de choisir l'icone correspondant au statut.
-
+        description: |
+          Statut du dossier, permet de choisir l'icone correspondant au statut.
+          Le nombre 0 pour un dossier en cours ou a faire et le nombre 1 pour un dossier dont le rapport est généré.
   Piece:
     type: object
     required:
