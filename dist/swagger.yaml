@@ -2000,6 +2000,7 @@ paths:
                 kilometrage: 181645
                 code_energie: GO,
                 code_carrosserie: CI 5
+                categorie_vehicule: moyen
                 annee_modele: 2006
                 couleur: bleu
                 puissance_fiscale: 9
@@ -2128,6 +2129,7 @@ paths:
                 kilometrage: 181645
                 code_energie: GO
                 code_carrosserie: CI 5
+                categorie_vehicule: moyen
                 annee_modele: 2006
                 couleur: bleu
                 puissance_fiscale: 9
@@ -2224,6 +2226,7 @@ definitions:
       - kilometrage
       - code_energie
       - code_carrosserie
+      - categorie_vehicule
       - annee_modele
       - couleur
       - puissance_fiscale
@@ -2265,6 +2268,13 @@ definitions:
         default: CI 5
         description: |
           Type du véhicule défini par un code (CI 3, CI 5, break)
+      categorie_vehicule:
+        type: string
+        default: moyen
+        description: |
+          Catégorie du véhicule ("Petit", "Moyen", "Gros").
+          Information utile afin de permettre le calcul des tarifs.
+          En fonction du libellé, le prix du dégarnissage est différent.
       annee_modele:
         type: integer
         default: 2017
@@ -2314,6 +2324,7 @@ definitions:
       - usure_pneu_AVG
       - usure_pneu_ARD
       - usure_pneu_ARG
+      - categorie_vehicule
     properties:
       vin:
         type: string
@@ -2350,6 +2361,13 @@ definitions:
         default: CI 5
         description: |
           Type du véhicule défini par un code (CI 3, CI 5, break)
+      categorie_vehicule:
+        type: string
+        default: moyen
+        description: |
+          Catégorie du véhicule ("Petit", "Moyen", "Gros").
+          Information utile afin de permettre le calcul des tarifs.
+          En fonction du libellé, le prix du dégarnissage est différent.
       annee_modele:
         type: integer
         default: 2017
