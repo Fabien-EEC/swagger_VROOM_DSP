@@ -4,8 +4,8 @@ info:
   title: VROOM DSP
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
-host: localhost
-basePath: /api
+host: api.vroom.pro
+basePath: /
 tags:
   - name: Connexion
   - name: Dossiers
