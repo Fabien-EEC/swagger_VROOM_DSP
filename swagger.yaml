@@ -4,7 +4,7 @@ info:
   title: VROOM DSP
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
-host: apidev.vroom.pro
+host: localhost/api
 basePath: /
 tags:
   - name: Connexion
@@ -118,6 +118,7 @@ paths:
                 pieces_disponibles:
                   - id: 1
                     libelle: Capot
+                    position:
                   - id: 2
                     libelle: Aile
                     position: AVG
@@ -132,6 +133,7 @@ paths:
                     position: ARD
                   - id: 6
                     libelle: Pare-brise
+                    position:
                 type_reparation_disponible:
                   1: Redressage
                   2: Débosselage
