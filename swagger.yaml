@@ -112,15 +112,25 @@ paths:
             application/json:
               response: OK
               message: ""
-              nb_resultats: 2
+              nb_resultats: 1
               execute_time: 0.00087
               resultats:
                 pieces_disponibles:
                   - id: 1
                     libelle: Capot
                   - id: 2
-                    libelle: Aile avant droite
+                    libelle: Aile
+                    position: AVG
                   - id: 3
+                    libelle: Aile
+                    position: ARG
+                  - id: 4
+                    libelle: Aile
+                    position: AVD
+                  - id: 5
+                    libelle: Aile
+                    position: ARD
+                  - id: 6
                     libelle: Pare-brise
                 type_reparation_disponible:
                   1: Redressage
@@ -2420,6 +2430,10 @@ definitions:
         type: integer
         description: |
           Identifiant du type de la pièce unique par dossier
+      id_position:
+        type: integer
+        description: |
+          Identifiant de la position de la pièce.
       aluminium:
         type: integer
         description: La pièce est-elle en aluminium ?
@@ -2587,6 +2601,20 @@ definitions:
     items:
       $ref: "#/definitions/TypePiece"
 
+  ListeLibellePosition:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: |
+            Identifiant à transmettre à pour désigner la position de la pièces en question.
+        libelle:
+          type: string
+          description: |
+            Désignation de la position de la pièce (ex: AVD, ARG, droite, etc ...)
+
   ListeTypeReparationDisponible:
     type: array
     items:
@@ -2601,12 +2629,15 @@ definitions:
       id:
         type: integer
         description: |
-          Identifiant du type de la pièce
+          Identifiant du type de la pièce couplé à la position.
       libelle:
         type: string
         description: |
           Libellé du type de la pièce
-
+      position:
+        type: string
+        description: |
+          Libellé de la position de la pièce.
   Impacts:
     type: object
     required:
