@@ -4,8 +4,12 @@ info:
   title: VROOM DSP
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
-host: localhost/api
+
+host: apidev.vroom.pro
 basePath: /
+
+#host: localhost
+#basePath: /api
 tags:
   - name: Connexion
   - name: Dossiers
@@ -2018,6 +2022,10 @@ paths:
                 puissance_fiscale: 9
                 date_achat: '2006-05-06 00:00:00'
                 date_immatriculation: '2006-07-07 00:00:00'
+                usure_pneu_AVG: 10
+                usure_pneu_AVD: 10
+                usure_pneu_ARG: 20
+                usure_pneu_ARD: 20
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -2147,6 +2155,10 @@ paths:
                 puissance_fiscale: 9
                 date_achat: '2006-05-06 00:00:00'
                 date_immatriculation: '2006-07-07 00:00:00'
+                usure_pneu_AVG: 10
+                usure_pneu_AVD: 10
+                usure_pneu_ARG: 20
+                usure_pneu_ARD: 20
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -2244,6 +2256,10 @@ definitions:
       - puissance_fiscale
       - date_achat
       - date_immatriculation
+      - usure_pneu_AVG
+      - usure_pneu_ARG
+      - usure_pneu_AVD
+      - usure_pneu_ARD
     properties:
       vin:
         type: string
@@ -2603,19 +2619,6 @@ definitions:
     items:
       $ref: "#/definitions/TypePiece"
 
-  ListeLibellePosition:
-    type: array
-    items:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: |
-            Identifiant à transmettre à pour désigner la position de la pièces en question.
-        libelle:
-          type: string
-          description: |
-            Désignation de la position de la pièce (ex: AVD, ARG, droite, etc ...)
 
   ListeTypeReparationDisponible:
     type: array
