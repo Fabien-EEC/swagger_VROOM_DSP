@@ -2449,10 +2449,6 @@ definitions:
         type: integer
         description: |
           Identifiant du type de la pièce unique par dossier
-      id_position:
-        type: integer
-        description: |
-          Identifiant de la position de la pièce.
       aluminium:
         type: integer
         description: La pièce est-elle en aluminium ?
