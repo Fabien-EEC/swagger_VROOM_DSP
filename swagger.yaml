@@ -5,11 +5,11 @@ info:
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
 
-host: apidev.vroom.pro
-basePath: /
+#host: apidev.vroom.pro
+#basePath: /
 
-#host: localhost
-#basePath: /api
+host: localhost
+basePath: /api
 
 tags:
   - name: Connexion
