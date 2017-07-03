@@ -176,8 +176,8 @@ paths:
                   login: EIDWA
                 nb_impacts_max: 200
               token: $2a$08$oOWPtQtzjaXVQBEbhSc9POrX2h97elXFF/N6l6QYFZXp2rX3tNGwW
-        "400":
-          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+        "401":
+          description: Les informations de connexion ne sont pas valides
           schema:
             $ref: "#/definitions/Returner"
           examples:
@@ -275,28 +275,77 @@ paths:
                   après au nombre de dossiers par page.
           examples:
             application/json:
-              response: OK
-              message: ""
-              nb_resultats: 2
+              response: "OK"
+              message: "OK"
+              nb_resultats: 1
               execute_time: 0.00087
               resultats:
-                - dossier_id: 1
-                  internal_id: 12518
-                  nom_prenom: Dupont Luc
-                  immatriculation: DJ-925-AL
-                  marque: Peugeot
-                  modele: 206
+                - dossier_id: 420058502
+                  internal_id: 2016006809
+                  nom_prenom: NGUYEN VALERIE
+                  immatriculation: AH-630-XY
+                  marque: CITROEN
+                  modele: C3
                   statut: 0
-
-                - dossier_id: 2
-                  internal_id: 13504
-                  nom_prenom: Marc Trollou
-                  immatriculation: AP-832-DD
-                  marque: Citroen
-                  modele: C4
-                  statut: 1
+                  date_rapport: "0"
+                  montant: "0"
+                  pieces:
+                    - id_type_piece: 1
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 1
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 100
+                       - taille: moyen
+                         nombre: 5
+                    - id_type_piece: 3
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 0
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 15
+                  nombre_pieces: 5
+                  nombre_photos: 0
+                  afficher_btn_ajouter_photos: 0
+                  afficher_btn_expertiser: 0
+                  afficher_btn_proces_verbal: 0
+                  identification:
+                    vin: "VF7FCKFVC9A205460"
+                    immatriculation: "AH-630-XY"
+                    modele: "C3"
+                    constructeur: "CITROEN"
+                    genre: "VP"
+                    kilometrage: ""
+                    code_energie: "ES"
+                    code_carrosserie: "CI"
+                    annee_modele: "2010"
+                    couleur: "Gris"
+                    puissance_fiscale: "5"
+                    date_achat: "2015-07-09 00:00:00"
+                    date_immatriculation: "2009-12-28 00:00:00"
+                    pv_vin: null
+                    pv_immatriculation: null
+                    pv_modele: null
+                    pv_constructeur: null
+                    pv_genre: null
+                    pv_code_energie: null
+                    pv_code_carrosserie: null
+                    pv_annee_modele: null
+                    pv_couleur: null
+                    pv_puissance_fiscale: null
+                    pv_date_achat: null
+                    pv_date_immatriculation: null
+                    usure_pneu_AVG: ""
+                    usure_pneu_ARG: ""
+                    usure_pneu_AVD: ""
+                    usure_pneu_ARD: ""
+                    categorie_vehicule: ""
               current_page: 1
-              limit: 15
+              limit: 1
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -394,24 +443,75 @@ paths:
                 $ref: "#/definitions/Dossier"
           examples:
             application/json:
-              response: OK
-              message: ""
+              response: "OK"
+              message: "OK"
               nb_resultats: 1
               execute_time: 0.00087
               resultats:
-                dossier_id: 1
-                nom_prenom: Dupont Luc
-                immatriculation: DJ-925-AL
-                marque: Peugeot
-                modele: 206
-                nombre_pieces: 2
-                nombre_photos: 5
-                statut: 1
-                date_rapport: "2017-02-22 12:30:00"
-                montant: 1500.12
-                afficher_btn_ajouter_photos: true
-                afficher_btn_expertiser: true
-                afficher_btn_proces_verbal: true
+                - dossier_id: 420058502
+                  internal_id: 2016006809
+                  nom_prenom: NGUYEN VALERIE
+                  immatriculation: AH-630-XY
+                  marque: CITROEN
+                  modele: C3
+                  statut: 0
+                  date_rapport: "0"
+                  montant: "0"
+                  pieces:
+                    - id_type_piece: 1
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 1
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 100
+                       - taille: moyen
+                         nombre: 5
+                    - id_type_piece: 3
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 0
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 15
+                  nombre_pieces: 5
+                  nombre_photos: 0
+                  afficher_btn_ajouter_photos: 0
+                  afficher_btn_expertiser: 0
+                  afficher_btn_proces_verbal: 0
+                  identification:
+                    vin: "VF7FCKFVC9A205460"
+                    immatriculation: "AH-630-XY"
+                    modele: "C3"
+                    constructeur: "CITROEN"
+                    genre: "VP"
+                    kilometrage: ""
+                    code_energie: "ES"
+                    code_carrosserie: "CI"
+                    annee_modele: "2010"
+                    couleur: "Gris"
+                    puissance_fiscale: "5"
+                    date_achat: "2015-07-09 00:00:00"
+                    date_immatriculation: "2009-12-28 00:00:00"
+                    pv_vin: null
+                    pv_immatriculation: null
+                    pv_modele: null
+                    pv_constructeur: null
+                    pv_genre: null
+                    pv_code_energie: null
+                    pv_code_carrosserie: null
+                    pv_annee_modele: null
+                    pv_couleur: null
+                    pv_puissance_fiscale: null
+                    pv_date_achat: null
+                    pv_date_immatriculation: null
+                    usure_pneu_AVG: ""
+                    usure_pneu_ARG: ""
+                    usure_pneu_AVD: ""
+                    usure_pneu_ARD: ""
+                    categorie_vehicule: ""
         "400":
           description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
           schema:
@@ -456,6 +556,171 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
+
+  /rest/cabinets/dossiers/{critere}:
+    get:
+      summary: Liste les dossiers d'un cabinet depuis un critère
+      description: |
+        Liste des dossiers d'un cabinet depuis un critère. La recherche sera sur ce critère en testant en premier l'immatriculation / le numéro de dossier du cabinet (l'internal_id) et pour finir le Nom prénom de l'assuré.
+      tags:
+        - Dossiers
+        - Tous
+      parameters:
+        - name: critere
+          description: |
+            Critère de recherche, peut être une immatriculation, un numéro de dossier ou un nom prénom
+          in: path
+          type: string
+          required: true
+
+        - $ref: '#/parameters/token'
+        - $ref: '#/parameters/login'
+        - $ref: '#/parameters/dsp'
+
+        - name: start
+          in: query
+          description: |
+            Correspond au numéro de la page commence à 0 pour obtenir la première page
+          required: false
+          type: integer
+          minimum: 0
+
+        - name: limit
+          in: query
+          description: |
+            Nombre de dossiers à retourner pour chaque page
+          required: false
+          type: integer
+          minimum: 0
+      responses:
+        "200":
+          description: |
+            Succès de la requete:
+            ---------------------
+            Liste de dossiers
+          schema:
+            $ref: '#/definitions/ListeDossiers'
+          examples:
+            application/json:
+              response: "OK"
+              message: "OK"
+              nb_resultats: 1
+              execute_time: 0.00087
+              resultats:
+                - dossier_id: 420058502
+                  internal_id: 2016006809
+                  nom_prenom: NGUYEN VALERIE
+                  immatriculation: AH-630-XY
+                  marque: CITROEN
+                  modele: C3
+                  statut: 0
+                  date_rapport: "0"
+                  montant: "0"
+                  pieces:
+                    - id_type_piece: 1
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 1
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 100
+                       - taille: moyen
+                         nombre: 5
+                    - id_type_piece: 3
+                      hors_sinistre: 0
+                      peinture: 1
+                      aluminium: 0
+                      id_type_reparation: 1
+                      impacts:
+                       - taille: petit
+                         nombre: 15
+                  nombre_pieces: 5
+                  nombre_photos: 0
+                  afficher_btn_ajouter_photos: 0
+                  afficher_btn_expertiser: 0
+                  afficher_btn_proces_verbal: 0
+                  identification:
+                    vin: "VF7FCKFVC9A205460"
+                    immatriculation: "AH-630-XY"
+                    modele: "C3"
+                    constructeur: "CITROEN"
+                    genre: "VP"
+                    kilometrage: ""
+                    code_energie: "ES"
+                    code_carrosserie: "CI"
+                    annee_modele: "2010"
+                    couleur: "Gris"
+                    puissance_fiscale: "5"
+                    date_achat: "2015-07-09 00:00:00"
+                    date_immatriculation: "2009-12-28 00:00:00"
+                    pv_vin: null
+                    pv_immatriculation: null
+                    pv_modele: null
+                    pv_constructeur: null
+                    pv_genre: null
+                    pv_code_energie: null
+                    pv_code_carrosserie: null
+                    pv_annee_modele: null
+                    pv_couleur: null
+                    pv_puissance_fiscale: null
+                    pv_date_achat: null
+                    pv_date_immatriculation: null
+                    usure_pneu_AVG: ""
+                    usure_pneu_ARG: ""
+                    usure_pneu_AVD: ""
+                    usure_pneu_ARD: ""
+                    categorie_vehicule: ""
+              current_page: 1
+              limit: 1
+        "400":
+          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "401":
+          description: Votre token est invalide.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: 0
+        "403":
+          description: |
+            Vous n'avez pas de droit d'accéder à ces dossiers.
+          schema:
+            $ref: '#/definitions/Returner'
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Vous n'avez pas le droit de supprimer cette pièce.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
+        "404":
+          description: |
+            Le cabinet n'existe pas, l'identifiant ne doit pas être le bon.
+          schema:
+            $ref: "#/definitions/Returner"
+          examples:
+            application/json:
+              response: FAIL
+              message: |
+                Aucun dossier trouvé pour ce cabinet.
+              nb_resultats: 0
+              execute_time: 0.00087
+              resultats: null
 
   /rest/dossiers/{id}/pieces:
     get:
@@ -1686,177 +1951,6 @@ paths:
               execute_time: 0.00087
               resultats: null
 
-  /rest/cabinets/dossiers/{critere}:
-    get:
-      summary: Liste les dossiers d'un cabinet depuis un critère
-      description: |
-        Liste des dossiers d'un cabinet depuis un critère. La recherche sera sur ce critère en testant en premier l'immatriculation / le numéro de dossier du cabinet (l'internal_id) et pour finir le Nom prénom de l'assuré.
-      tags:
-        - Dossiers
-        - Tous
-      parameters:
-        - name: critere
-          description: |
-            Critère de recherche, peut être une immatriculation, un numéro de dossier ou un nom prénom
-          in: path
-          type: string
-          required: true
-
-        - $ref: '#/parameters/token'
-        - $ref: '#/parameters/login'
-        - $ref: '#/parameters/dsp'
-
-        - name: start
-          in: query
-          description: |
-            Correspond au numéro de la page commence à 0 pour obtenir la première page
-          required: false
-          type: integer
-          minimum: 0
-
-        - name: limit
-          in: query
-          description: |
-            Nombre de dossiers à retourner pour chaque page
-          required: false
-          type: integer
-          minimum: 0
-      responses:
-        "200":
-          description: |
-            Succès de la requete:
-            ---------------------
-            Liste de dossiers
-          schema:
-            $ref: '#/definitions/ListeDossiers'
-          examples:
-            application/json:
-              response: OK
-              message: ""
-              nb_resultats: 2
-              execute_time: 0.00087
-              resultats:
-                - dossier_id: 1
-                  nom_prenom: Dupont Luc
-                  immatriculation: DJ-925-AL
-                  marque: Peugeot
-                  modele: 206
-                  nombre_pieces: 2
-                  nombre_photos: 0
-                  statut: 0
-                  afficher_btn_expertiser: false
-                  afficher_btn_proces_verbal: false
-                  photos: null
-                  pieces:
-                  - id_type_piece: 2
-                    aluminium: 0
-                    peinture: 1
-                    hors_sinistre: 0
-                    id_type_reparation: 1
-                    impacts:
-                      - taille: petit
-                        nombre: 3
-                      - taille: moyen
-                        nombre: 15
-                  - id_type_piece: 2
-                    aluminium: 1
-                    peinture: 1
-                    hors_sinistre: 1
-                    id_type_reparation: 1
-                    impacts:
-                      - taille: petit
-                        nombre: 3
-                      - taille: moyen
-                        nombre: 15
-                      - taille: gros
-                        nombre: 1
-
-                - dossier_id: 1122
-                  internal_id: 2
-                  nom_prenom: Marc Trollou
-                  immatriculation: AP-832-DD
-                  marque: Citroen
-                  modele: C4
-                  nombre_pieces: 1
-                  nombre_photos: 5
-                  statut: 1
-                  afficher_btn_expertiser: false
-                  afficher_btn_proces_verbal: false
-                  photos:
-                    - photo_id: 12
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170012/20170012-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 13
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170013/20170013-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 14
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170014/20170014-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 15
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170015/20170015-01-19_20-10-59_AUTRE.pdf
-                    - photo_id: 16
-                      url: https://expertiseconcept.s3.eu-central-1.amazonaws.com/documents/expertise_%26_concept/20170016/20170016-01-19_20-10-59_AUTRE.pdf
-                  pieces:
-                    - id_type_piece: 3
-                      aluminium: 1
-                      peinture: 1
-                      hors_sinistre: 1
-                      id_type_reparation: 1
-                      impacts:
-                        - taille: petit
-                          nombre: 3
-                        - taille: moyen
-                          nombre: 15
-                        - taille: gros
-                          nombre: 1
-              current_page: 1
-              limit: 15
-        "400":
-          description: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: Les paramètres fournis ne sont pas dans le bon format ou il manque des paramètres
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-        "401":
-          description: Votre token est invalide.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
-        "403":
-          description: |
-            Vous n'avez pas de droit d'accéder à ces dossiers.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de supprimer cette pièce.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-        "404":
-          description: |
-            Le cabinet n'existe pas, l'identifiant ne doit pas être le bon.
-          schema:
-            $ref: "#/definitions/Returner"
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Aucun dossier trouvé pour ce cabinet.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
-
   /rest/dossiers/{id}/vehicule:
     get:
       summary: Récupère le véhicule du dossier
@@ -2148,6 +2242,7 @@ parameters:
 
 # Liste des définitions des modèles
 definitions:
+
   Vehicule:
     type: object
     required:
@@ -2253,6 +2348,7 @@ definitions:
         type: string
         description: |
           Usure du pneu à l'arrière côté gauche
+
   UpdateVehicule:
     type: object
     required:
@@ -2346,6 +2442,7 @@ definitions:
         type: string
         description: |
           Usure du pneu à l'arrière côté gauche
+
   AddOrUpdatePiece:
     type: object
     required:
@@ -2373,6 +2470,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Impacts"
+
   Dossier:
     type: object
     required:
@@ -2381,9 +2479,9 @@ definitions:
       - immatriculation
       - marque
       - modele
+      - statut
       - nombre_pieces
       - nombre_photos
-      - statut
       - afficher_btn_ajouter_photos
       - afficher_btn_expertiser
       - afficher_btn_proces_verbal
@@ -2391,6 +2489,10 @@ definitions:
       dossier_id:
         type: integer
         description: Identifiant du dossier
+      internal_id:
+        type: integer
+        description: |
+          Identifiant du dossier interne au cabinet. Cet identifiant, doit être celui qui est affiché.
       nom_prenom:
         type: string
         description: Nom et prénom de l'assuré
@@ -2403,23 +2505,27 @@ definitions:
       modele:
         type: string
         description: Modèle du véhicule à expertiser
+      statut:
+        type: integer
+        description: Statut du dossier, permet de choisir l'icone correspondant au statut
+      date_rapport:
+        type: string
+        format: date-time
+        description: |
+          Date de la génération du rapport d'expertise, le dossier devient clos.
+      montant:
+        type: number
+        description: Montant des réparations défini
+      pieces:
+        type: array
+        items:
+          $ref: '#/definitions/AddOrUpdatePiece'
       nombre_pieces:
         type:  integer
         description: Nombre de pièces endommagées sur ce véhicule
       nombre_photos:
         type: integer
         description: Nombre de photo du dossier pour la grêle
-      montant:
-        type: number
-        description: Montant des réparations défini
-      date_rapport:
-        type: string
-        format: date-time
-        description: |
-          Date de la génération du rapport d'expertise, le dossier devient clos.
-      statut:
-        type: integer
-        description: Statut du dossier, permet de choisir l'icone correspondant au statut
       afficher_btn_ajouter_photos:
         type: integer
         description: |
@@ -2432,6 +2538,8 @@ definitions:
         type: boolean
         description: |
           Défini si le bouton "Etablir le procès verbal" doit être affiché.
+      identification:
+        $ref: '#/definitions/Vehicule'
 
   ListeDossiers:
     type: object
@@ -2443,6 +2551,15 @@ definitions:
       - marque
       - modele
       - statut
+      - date_rapport
+      - montant
+      - pieces
+      - nombre_pieces
+      - nombre_photos
+      - afficher_btn_ajouter_photos
+      - afficher_btn_expertiser
+      - afficher_btn_proces_verbal
+      - identification
     properties:
       dossier_id:
         type: integer
@@ -2470,6 +2587,39 @@ definitions:
         description: |
           Statut du dossier, permet de choisir l'icone correspondant au statut.
           Le nombre 0 pour un dossier en cours ou a faire et le nombre 1 pour un dossier dont le rapport est généré.
+      date_rapport:
+        type: string
+        format: date-time
+        description: |
+          Date de la génération du rapport d'expertise, le dossier devient clos.
+      montant:
+        type: number
+        description: Montant des réparations défini
+      pieces:
+        type: array
+        items:
+          $ref: '#/definitions/AddOrUpdatePiece'
+      nombre_pieces:
+        type:  integer
+        description: Nombre de pièces endommagées sur ce véhicule
+      nombre_photos:
+        type: integer
+        description: Nombre de photo du dossier pour la grêle
+      afficher_btn_ajouter_photos:
+        type: integer
+        description: |
+          Défini si le bouton "Ajouter des photos" doit être affiché.
+      afficher_btn_expertiser:
+        type: boolean
+        description: |
+          Défini si le bouton "Expertiser le véhicule" doit être affiché.
+      afficher_btn_proces_verbal:
+        type: boolean
+        description: |
+          Défini si le bouton "Etablir le procès verbal" doit être affiché.
+      identification:
+        $ref: '#/definitions/Vehicule'
+
   Piece:
     type: object
     required:
@@ -2524,7 +2674,6 @@ definitions:
     items:
       $ref: "#/definitions/TypePiece"
 
-
   ListeTypeReparationDisponible:
     type: array
     items:
@@ -2548,6 +2697,7 @@ definitions:
         type: string
         description: |
           Libellé de la position de la pièce.
+
   Impacts:
     type: object
     required:
