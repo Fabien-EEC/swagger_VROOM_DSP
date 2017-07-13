@@ -5,8 +5,8 @@ info:
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
 
-#host: apidev.vroom.pro
-#basePath: /
+# host: apidev.vroom.pro
+# basePath: /
 
 host: localhost
 basePath: /api
@@ -368,17 +368,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: Dossiers interdits pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous n'avez pas le droit d'accéder à ces dossiers."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
         "404":
           description: L'identifiant de l'expert n'existe pas.
           schema:
@@ -531,17 +520,6 @@ paths:
             application/json:
               response: FAIL
               message: "Le token est invalide ou manquant, vous ne pouvez pas accéder à cette méthode."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
-        "403":
-          description: Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous n'avez pas le droit d'accéder à ce dossier."
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
@@ -825,17 +803,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: "Vous n'avez pas le droit d'accéder à ce dossier."
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: 0
         "404":
           description: Aucun dossier trouvé.
           schema:
@@ -948,19 +915,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: Aucun dossier trouvé.
           schema:
@@ -1083,19 +1037,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Aucun dossier trouvé pour cet identifiant.
@@ -1212,19 +1153,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Aucun dossier trouvé pour cet identifiant.
@@ -1524,20 +1452,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: Aucun pièce trouvée.
           schema:
@@ -1644,19 +1558,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Vous n'avez pas de droit de supprimer cette pièce.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de supprimer cette pièce.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Aucun pièce trouvée.
@@ -1787,20 +1688,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-
-        "403":
-          description: |
-            Dossier interdit pour cet utilisateur.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de modifier ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: Aucun dossier, pièce ou impact trouvé pour la mise à jour.
           schema:
@@ -1911,20 +1798,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-
-        "403":
-          description: |
-            Vous n'avez pas de droit de supprimer cet impact.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de supprimer cet impact.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Aucun dossier, pièce ou impact trouvé pour la suppression.
@@ -2051,19 +1924,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Vous n'avez pas de droit d'accéder à ce dossiers.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de consulter le véhicule de ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Le dossier n'existe pas.
@@ -2185,19 +2045,6 @@ paths:
               nb_resultats: 0
               execute_time: 0.00087
               resultats: 0
-        "403":
-          description: |
-            Vous n'avez pas de droit d'accéder à ce dossiers.
-          schema:
-            $ref: '#/definitions/Returner'
-          examples:
-            application/json:
-              response: FAIL
-              message: |
-                Vous n'avez pas le droit de consulter le véhicule de ce dossier.
-              nb_resultats: 0
-              execute_time: 0.00087
-              resultats: null
         "404":
           description: |
             Le dossier n'existe pas.
