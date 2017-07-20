@@ -5,11 +5,11 @@ info:
   description: |
     Api sur la consultation et la mise à jour de dossier concernant la grêle.
 
-# host: apidev.vroom.pro
-# basePath: /
+ host: apidev.vroom.pro
+ basePath: /
 
-host: localhost
-basePath: /api
+#host: localhost
+#basePath: /api
 
 tags:
   - name: Connexion
@@ -2151,7 +2151,7 @@ definitions:
         type: string
         default: moyen
         description: |
-          Catégorie du véhicule ("Petit", "Moyen", "Gros").
+          Catégorie du véhicule ("petit", "moyen", "grand").
           Information utile afin de permettre le calcul des tarifs.
           En fonction du libellé, le prix du dégarnissage est différent.
       annee_modele:
@@ -2245,7 +2245,7 @@ definitions:
         type: string
         default: moyen
         description: |
-          Catégorie du véhicule ("Petit", "Moyen", "Gros").
+          Catégorie du véhicule ("petit", "moyen", "grand").
           Information utile afin de permettre le calcul des tarifs.
           En fonction du libellé, le prix du dégarnissage est différent.
       annee_modele:
